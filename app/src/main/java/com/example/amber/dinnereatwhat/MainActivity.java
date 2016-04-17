@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     }
 
     public void onAddDinnerClick(View view) {
-        presenter.addDinner(new DinnerData());
+        presenter.onAddDinnerClick(new DinnerData());
     }
 
     public void showToast(String s){

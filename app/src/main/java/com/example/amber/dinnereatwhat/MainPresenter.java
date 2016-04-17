@@ -16,7 +16,7 @@ public class MainPresenter {
         view.setContentView();
     }
 
-    public void addDinner(DinnerData dinnerData) {
+    public void onAddDinnerClick(DinnerData dinnerData) {
         dinnerData.shop = "Mc";
         dinnerData.meal = "coke";
         dinnerData.price = 40;
