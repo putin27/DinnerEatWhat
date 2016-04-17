@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+//這邊是主要的VIEW
+//主要接收使用者的動作和顯示螢幕
+//接收到使用者動作後，通知presenter去處理
 public class MainActivity extends AppCompatActivity implements MainView{
 
     private  MainPresenter presenter;
@@ -14,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         super.onCreate(savedInstanceState);
 
         presenter = new MainPresenter(this,new MainModel(this));
+        //讓presenter啟動開始程序
         presenter.onCreat();
     }
 

@@ -1,6 +1,6 @@
 package com.example.amber.dinnereatwhat;
 
-
+//資料處理&存放處
 public class MainModel {
     private MainActivity activity;
     private DBHelper dbHelper;
