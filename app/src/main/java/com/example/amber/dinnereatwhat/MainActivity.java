@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
         //讓presenter啟動開始程序
         presenter.onCreat();
     }
-
+    //test
     @Override
     public void setContentView() {
         setContentView(R.layout.activity_main);
