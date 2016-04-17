@@ -1,5 +1,5 @@
 package com.example.amber.dinnereatwhat;
-//test
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
