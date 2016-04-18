@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 //table的第一筆資料 cursor的position從0開始 裡面的_id是第0個欄位 所以資料從1開始取
 
@@ -32,12 +31,19 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createDinnerTable);
-        insertDinner(new DinnerData("賣噹噹","雞塊餐",99,""));
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
+    }
+
+    //判斷是否資料庫為空
+    public boolean isEmpty() {
+        cursor = db.query(tableName, null, null, null, null, null, null);
+        // 如果沒有第一筆資料 回傳false
+        return !cursor.moveToFirst();
+
     }
 
     public void insertDinner(DinnerData dinnerData) {
@@ -49,14 +55,15 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(tableName, null, contentValues);
     }
 
-    public DinnerData getDinnerData() {
-        DinnerData dinnerData = new DinnerData();
+    public DinnerData getDinnerData(int position) {
         cursor = db.query(tableName, null, null, null, null, null, null);
-        cursor.moveToFirst();
-        dinnerData.shop = cursor.getString(1);
-        dinnerData.meal = cursor.getString(2);
-        dinnerData.price = cursor.getInt(3);
-        dinnerData.tag = cursor.getString(4);
-        return dinnerData;
+        cursor.moveToPosition(position);
+        return new DinnerData(cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+    }
+
+    public int getSize() {
+        cursor = db.query(tableName, null, null, null, null, null, null);
+
+        return cursor.getCount();
     }
 }

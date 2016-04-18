@@ -3,24 +3,23 @@ package com.example.amber.dinnereatwhat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-import android.content.Intent;
+import android.widget.TextView;
 
 //這邊是主要的VIEW
 //主要接收使用者的動作和顯示螢幕
 //接收到使用者動作後，通知presenter去處理
-public class MainActivity extends AppCompatActivity implements MainView{
+public class MainActivity extends AppCompatActivity implements MainView {
 
-    private  MainPresenter presenter;
+    private MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new MainPresenter(this,new MainModel(this));
+        presenter = new MainPresenter(this, new MainModel(this));
         //讓presenter啟動開始程序
         presenter.onCreat();
     }
+
     //test
     @Override
     public void setContentView() {
@@ -37,32 +36,40 @@ public class MainActivity extends AppCompatActivity implements MainView{
         setContentView(R.layout.choose);
     }
 
+
     @Override
-    public void switchToFinalDinner() {
+    public void switchToFinalDinner(DinnerData dinnerData) {
         setContentView(R.layout.final_dinner);
+        TextView textView = (TextView) findViewById(R.id.tv_finaldinner);
+        assert textView != null;
+        textView.setText(dinnerData.toString());
+    }
+
+    @Override
+    public void chooseAgain(DinnerData dinnerData) {
+        TextView textView = (TextView) findViewById(R.id.tv_finaldinner);
+        assert textView != null;
+        textView.setText(dinnerData.toString());
     }
 
 
     public void onFastChooseDinnerClick(View view) {
         presenter.onFastChooseDinnerClick();
     }
+
     public void onChooseDinnerClick(View view) {
         presenter.onChooseDinnerClick();
     }
+
     public void onAddDinnerClick(View view) {
         presenter.onAddDinnerClick();
     }
+
     public void onTagChooseDinnerClick(View view) {
         presenter.onTagChooseDinnerClick();
     }
 
-
-
-    public void showToast(String s){
-        Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
-    }
-
-
     public void onChooseAgainClick(View view) {
+        presenter.onChooseAgainClick();
     }
 }
