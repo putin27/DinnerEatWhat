@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private final static String DATABASE_NAME = "item_database";
+    private final static String DATABASE_NAME = "dinnerDatabase";
     private final static int DATABASE_VERSION = 1;
     private String tableName = "dinner";
     private String createDinnerTable = "CREATE TABLE IF NOT EXISTS " + tableName
