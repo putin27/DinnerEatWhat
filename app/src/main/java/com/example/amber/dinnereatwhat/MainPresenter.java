@@ -15,18 +15,22 @@ public class MainPresenter {
     public void onCreat() {
         view.setContentView();
     }
-
-    public void onAddDinnerClick(DinnerData dinnerData) {
-        dinnerData.shop = "Mc";
-        dinnerData.meal = "coke";
-        dinnerData.price = 40;
-        dinnerData.tag = "drink";
-
-        model.addDinnerData(dinnerData);
+    public void onFastChooseDinnerClick() {
+        view.switchToFinalDinner();
     }
-
+    public void onChooseDinnerClick() {
+        view.switchToChooseDinner();
+    }
+    public void onAddDinnerClick() {
+        view.switchToAddDinner();
+    }
     public String getFristDinnerData() {
         DinnerData dinnerData = model.getFirstDinnerData();
         return "shop:"+dinnerData.shop+",meal:"+dinnerData.meal+",price:"+dinnerData.price+",tag:"+dinnerData.tag;
+    }
+
+
+    public void onTagChooseDinnerClick() {
+        view.switchToFinalDinner();
     }
 }

@@ -71,6 +71,7 @@
         android:layout_height="wrap_content"
         android:text="隨機選餐"
         android:id="@+id/button"
+        android:onClick="onTagChooseDinnerClick"
         android:layout_gravity="center_horizontal" />
 
     <CheckBox

@@ -32,7 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createDinnerTable);
-        Log.i("dbhelper", "db open succeed");
+        insertDinner(new DinnerData("賣噹噹","雞塊餐",99,""));
     }
 
     @Override

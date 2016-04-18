@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="再選一次"
         android:id="@+id/b_restart"
+        android:onClick="onChooseAgainClick"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

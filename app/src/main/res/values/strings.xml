@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">晚餐吃什麼</string>
-    <string name="chose_dinner">決定晚餐</string>
+    <string name="chose_dinner">快速決定晚餐</string>
+    <string name="chose_dinner2">詳細決定晚餐</string>
     <string name="add_dinner">增加晚餐資料</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_newdinner">newdinner</string>

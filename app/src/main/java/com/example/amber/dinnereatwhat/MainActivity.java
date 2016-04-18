@@ -27,17 +27,42 @@ public class MainActivity extends AppCompatActivity implements MainView{
         setContentView(R.layout.activity_main);
     }
 
-    public void onChoseDinnerClick(View view) {
-        showToast(presenter.getFristDinnerData());
+    @Override
+    public void switchToAddDinner() {
+        setContentView(R.layout.newdinner);
     }
 
-    public void onAddDinnerClick(View view) {
-        presenter.onAddDinnerClick(new DinnerData());
+    @Override
+    public void switchToChooseDinner() {
+        setContentView(R.layout.choose);
     }
+
+    @Override
+    public void switchToFinalDinner() {
+        setContentView(R.layout.final_dinner);
+    }
+
+
+    public void onFastChooseDinnerClick(View view) {
+        presenter.onFastChooseDinnerClick();
+    }
+    public void onChooseDinnerClick(View view) {
+        presenter.onChooseDinnerClick();
+    }
+    public void onAddDinnerClick(View view) {
+        presenter.onAddDinnerClick();
+    }
+    public void onTagChooseDinnerClick(View view) {
+        presenter.onTagChooseDinnerClick();
+    }
+
+
 
     public void showToast(String s){
         Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
     }
 
 
+    public void onChooseAgainClick(View view) {
+    }
 }

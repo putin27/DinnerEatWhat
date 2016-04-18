@@ -47,6 +47,20 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.05" />
 
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="標籤"
+        android:id="@+id/textView5"
+        android:textSize="20sp"
+        android:layout_weight="0.05" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tag"
+        android:layout_weight="0.05" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
