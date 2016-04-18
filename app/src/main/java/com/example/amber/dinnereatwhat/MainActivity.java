@@ -3,7 +3,9 @@ package com.example.amber.dinnereatwhat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+import android.content.Intent;
 
 //這邊是主要的VIEW
 //主要接收使用者的動作和顯示螢幕
@@ -15,7 +17,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         presenter = new MainPresenter(this,new MainModel(this));
         //讓presenter啟動開始程序
         presenter.onCreat();
@@ -37,4 +38,6 @@ public class MainActivity extends AppCompatActivity implements MainView{
     public void showToast(String s){
         Toast.makeText(this,s,Toast.LENGTH_SHORT).show();
     }
+
+
 }
