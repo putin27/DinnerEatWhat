@@ -20,6 +20,9 @@ public class DinnerData {
     }
 
     public String toString() {
-        return shop + "的" + meal + "," + price + "元";
+        return shop + "的" + meal;
+    }
+    public String toStringPrice() {
+        return price + "元";
     }
 }

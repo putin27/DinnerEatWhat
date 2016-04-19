@@ -40,9 +40,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void switchToFinalDinner(DinnerData dinnerData) {
         setContentView(R.layout.final_dinner);
-        TextView textView = (TextView) findViewById(R.id.tv_finaldinner);
-        assert textView != null;
-        textView.setText(dinnerData.toString());
+        TextView textView1 = (TextView) findViewById(R.id.tv_finaldinner);
+        assert textView1 != null;
+        textView1.setText(dinnerData.toString());
+        TextView textView2 = (TextView) findViewById(R.id.tv_price);
+        assert textView2 != null;
+        textView2.setText(dinnerData.toStringPrice());
     }
 
     @Override

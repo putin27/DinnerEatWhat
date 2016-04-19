@@ -20,6 +20,14 @@
         android:text="隨機餐點"
         android:textSize="30sp" />
 
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="價錢"
+        android:textSize="30sp" />
+
     <Button
         android:id="@+id/b_restart"
         android:layout_width="wrap_content"
