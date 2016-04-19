@@ -1,7 +1,10 @@
 package com.example.amber.dinnereatwhat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,7 +38,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void switchToChooseDinner() {
         setContentView(R.layout.choose);
     }
-
+    @Override
+    public void switchToMainView() {
+        setContentView(R.layout.activity_main);
+    }
 
     @Override
     public void switchToFinalDinner(DinnerData dinnerData) {
@@ -59,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
 
+
+
     public void onFastChooseDinnerClick(View view) {
         presenter.onFastChooseDinnerClick();
     }
@@ -77,5 +85,16 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     public void onChooseAgainClick(View view) {
         presenter.onChooseAgainClick();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event)
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK )
+        {
+            presenter.onKeyDown();
+        }
+
+        return false;
     }
 }

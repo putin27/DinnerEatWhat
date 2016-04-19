@@ -36,4 +36,8 @@ public class MainPresenter {
     public void onChooseAgainClick() {
         view.chooseAgain(model.getFinalDinnerFast());
     }
+
+    public void onKeyDown() {
+        view.switchToMainView();
+    }
 }

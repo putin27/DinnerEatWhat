@@ -13,4 +13,6 @@ public interface MainView {
     void switchToFinalDinner(DinnerData dinnerData);
 
     void chooseAgain(DinnerData dinnerData);
+
+    void switchToMainView();
 }
