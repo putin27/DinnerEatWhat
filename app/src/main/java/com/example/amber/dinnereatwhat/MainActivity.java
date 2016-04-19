@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         textView1.setText(dinnerData.toString());
         TextView textView2 = (TextView) findViewById(R.id.tv_price);
         assert textView2 != null;
-        textView2.setText(dinnerData.toStringPrice());
+        textView2.setText(dinnerData.getPrice());
     }
 
     @Override
@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
         TextView textView = (TextView) findViewById(R.id.tv_finaldinner);
         assert textView != null;
         textView.setText(dinnerData.toString());
+        TextView textView2 = (TextView) findViewById(R.id.tv_price);
+        assert textView2 != null;
+        textView2.setText(dinnerData.getPrice());
     }
 
 
