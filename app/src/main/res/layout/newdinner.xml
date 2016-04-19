@@ -8,14 +8,14 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="店家名稱"
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_store"
         android:textSize = "20sp"
         android:layout_weight="0.05" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et_name" />
+        android:id="@+id/et_store" />
 
     <TextView
         android:layout_width="100dp"
@@ -51,14 +51,14 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="標籤"
-        android:id="@+id/textView5"
+        android:id="@+id/tv_tag"
         android:textSize="20sp"
         android:layout_weight="0.05" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tag"
+        android:id="@+id/et_tag"
         android:layout_weight="0.05" />
 
     <Button
