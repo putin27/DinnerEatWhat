@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="隨機餐點"
+        android:textAlignment="center"
         android:textSize="30sp" />
 
     <TextView

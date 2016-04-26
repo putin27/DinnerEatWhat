@@ -28,7 +28,6 @@ public class MainPresenter {
         view.switchToAddDinner();
     }
 
-
     public void onTagChooseDinnerClick() {
         view.switchToFinalDinner(model.getFinalDinnerFast());
     }
@@ -39,5 +38,13 @@ public class MainPresenter {
 
     public void onKeyDown() {
         view.switchToMainView();
+    }
+
+    public void onEditButtonClick(int position) {
+
+    }
+
+    public void onEditDinnerClick() {
+        view.initDinnerRecyeclerView(model.getAllDinnerData());
     }
 }

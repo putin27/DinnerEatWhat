@@ -1,5 +1,6 @@
 package com.example.amber.dinnereatwhat;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 //資料處理&存放處
@@ -30,6 +31,9 @@ public class MainModel {
         dbHelper.insertDinner(dinnerData);
     }
 
+    public ArrayList<DinnerData> getAllDinnerData() {
+        return dbHelper.getAllDinnerData();
+    }
 
     //快速隨機取得晚餐
     public DinnerData getFinalDinnerFast() {

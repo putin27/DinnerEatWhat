@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 //table的第一筆資料 cursor的position從0開始 裡面的_id是第0個欄位 所以資料從1開始取
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -53,6 +55,17 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("price", dinnerData.price);
         contentValues.put("tag", dinnerData.tag);
         db.insert(tableName, null, contentValues);
+    }
+
+    public ArrayList<DinnerData> getAllDinnerData() {
+        ArrayList<DinnerData> dinnerDatas = new ArrayList<>();
+        cursor = db.query(tableName, null, null, null, null, null, null);
+        cursor.moveToFirst();
+        for (int i = 0; i < cursor.getCount(); i++) {
+            dinnerDatas.add(new DinnerData(cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4)));
+            cursor.moveToNext();
+        }
+        return dinnerDatas;
     }
 
     public DinnerData getDinnerData(int position) {

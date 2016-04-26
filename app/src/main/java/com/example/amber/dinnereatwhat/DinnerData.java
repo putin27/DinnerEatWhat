@@ -22,7 +22,7 @@ public class DinnerData {
     public String toString() {
         return shop + "的" + meal;
     }
-    public String getPrice() {
-        return price + "元";
+    public int getPrice() {
+        return price;
     }
 }

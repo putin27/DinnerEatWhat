@@ -1,6 +1,8 @@
 package com.example.amber.dinnereatwhat;
 
 
+import java.util.ArrayList;
+
 public interface MainView {
 
 
@@ -15,4 +17,6 @@ public interface MainView {
     void chooseAgain(DinnerData dinnerData);
 
     void switchToMainView();
+
+    void initDinnerRecyeclerView(ArrayList<DinnerData> dinnerDatas);
 }
