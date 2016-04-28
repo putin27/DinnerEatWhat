@@ -36,6 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + "tag CHAR,"
             + "FOREIGN KEY(t_id) REFERENCES " + dinnerTable + "(_id)"
             + ")";
+    private String cmdsOrSearch, cmdsAndSearch, cmdsSubquery;
 
     private SQLiteDatabase db;
     private Cursor cursor;
@@ -43,6 +44,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         db = this.getWritableDatabase();
+        cmdsSubquery = "(select t_id,tag from " + tagTable + " where tag =";
+        cmdsOrSearch = "select distinct t_id from ";
+        cmdsAndSearch = "select t_id from ";
     }
 
     @Override
