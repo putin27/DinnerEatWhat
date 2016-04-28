@@ -36,6 +36,10 @@ public class DBHelper extends SQLiteOpenHelper {
             + "tag CHAR,"
             + "FOREIGN KEY(t_id) REFERENCES " + dinnerTable + "(_id)"
             + ")";
+
+    //rawquery指令
+    //OR搜尋 AND搜尋 子搜尋
+    //寫入新的字串時 保持前面不留 後面有一個空白 防止指令黏在一起造成指令錯誤
     private String cmdsOrSearch, cmdsAndSearch, cmdsSubquery;
 
     private SQLiteDatabase db;
@@ -44,9 +48,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         db = this.getWritableDatabase();
-        cmdsSubquery = "(select t_id,tag from " + tagTable + " where tag =";
-        cmdsOrSearch = "select distinct t_id from ";
-        cmdsAndSearch = "select t_id from ";
+
+        resetCmds();
     }
 
     @Override
@@ -57,6 +60,34 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
+    }
+
+    public ArrayList<Integer> orSearch(ArrayList<String> tags) {
+
+        cmdsSubquery = cmdsSubquery + "'" + tags.get(0) + "' ";
+        for (int i = 1; i < tags.size(); i++) {
+            cmdsSubquery = cmdsSubquery + "or '" + tags.get(i) + "'";
+        }
+        cmdsSubquery = cmdsSubquery + ") ";
+
+        cmdsOrSearch = cmdsOrSearch + cmdsSubquery;
+
+        cursor = db.rawQuery(cmdsOrSearch, null);
+        cursor.moveToFirst();
+
+        ArrayList<Integer> ids = new ArrayList<>();
+        for (int i = 0; i < cursor.getCount(); i++) {
+            ids.add(cursor.getInt(i));
+            cursor.moveToNext();
+        }
+        return ids;
+    }
+
+
+    public void resetCmds() {
+        cmdsSubquery = "(select t_id,tag from " + tagTable + " where tag = ";
+        cmdsOrSearch = "select distinct t_id from ";
+        cmdsAndSearch = "select t_id from ";
     }
 
     //判斷是否資料庫為空
