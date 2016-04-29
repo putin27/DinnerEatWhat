@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/tv_store"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:text="店家名稱"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/et_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="請輸入店家名稱..."
+        android:textColorHint="@color/colorHint" />
+
+    <TextView
+        android:id="@+id/tv_meal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:text="餐點項目"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/et_meal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.05"
+        android:hint="請輸入餐點名稱..."
+        android:textColorHint="@color/colorHint" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:text="價格"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/et_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.05"
+        android:hint="請輸入價格..."
+        android:inputType="number"
+        android:textColorHint="@color/colorHint" />
+
+    <TextView
+        android:id="@+id/tv_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:text="標籤(請用逗號分開)"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/et_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        android:hint="請輸入標籤(ex:飯,熱食,晚餐)..."
+        android:textColorHint="@color/colorHint" />
+
+    <Button
+        android:id="@+id/b_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_weight="0.05"
+        android:onClick="onAddDinnerClick"
+        android:text="新增" />
+
+</LinearLayout>

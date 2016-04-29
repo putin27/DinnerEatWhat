@@ -24,7 +24,7 @@ public class MainPresenter {
         view.switchToChooseDinner();
     }
 
-    public void onAddDinnerClick() {
+    public void onGoAddDinnerClick() {
         view.switchToAddDinner();
     }
 
@@ -44,7 +44,14 @@ public class MainPresenter {
 
     }
 
-    public void onEditDinnerClick() {
+    public void onGoEditDinnerClick() {
         view.initDinnerRecyeclerView(model.getAllDinnerData());
+    }
+    //按下加入晚餐頁面的新增按鈕
+    public void onAddDinnerClick(DinnerData dinnerData) {
+        //叫model去加入晚餐
+        model.addDinnerData(dinnerData);
+        //叫view顯示成功加入訊息給使用者
+        view.showToast("新增成功!!!");
     }
 }

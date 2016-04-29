@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.08"
-        android:onClick="onAddDinnerClick"
+        android:onClick="onGoAddDinnerClick"
         android:text="@string/add_dinner" />
 
     <Button
@@ -52,6 +52,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.08"
-        android:onClick="onEditDinnerClick"
+        android:onClick="onGoEditDinnerClick"
         android:text="@string/edit_dinner" />
 </LinearLayout>

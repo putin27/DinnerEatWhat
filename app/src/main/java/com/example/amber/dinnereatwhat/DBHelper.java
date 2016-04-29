@@ -40,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //rawquery指令
     //OR搜尋 AND搜尋 子搜尋
     //寫入新的字串時 保持前面不留 後面有一個空白 防止指令黏在一起造成指令錯誤
-    private String cmdsOrSearch, cmdsAndSearch, cmdsSubquery;
+    private String cmdOrSearch, cmdAndSearch, cmdSubquery, cmdGetTag;
 
     private SQLiteDatabase db;
     private Cursor cursor;
@@ -48,46 +48,52 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         db = this.getWritableDatabase();
-
+        //重設cmd
         resetCmds();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //創建dinnerTable及tagTable
         db.execSQL(createDinnerTable);
+        db.execSQL(createTagTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
     }
-
+    //OR搜尋
     public ArrayList<Integer> orSearch(ArrayList<String> tags) {
 
-        cmdsSubquery = cmdsSubquery + "'" + tags.get(0) + "' ";
+        //組成OR搜尋的指令
+        cmdSubquery = cmdSubquery + "'" + tags.get(0) + "' ";
         for (int i = 1; i < tags.size(); i++) {
-            cmdsSubquery = cmdsSubquery + "or '" + tags.get(i) + "'";
+            cmdSubquery = cmdSubquery + "or '" + tags.get(i) + "'";
         }
-        cmdsSubquery = cmdsSubquery + ") ";
+        cmdSubquery = cmdSubquery + ") ";
 
-        cmdsOrSearch = cmdsOrSearch + cmdsSubquery;
-
-        cursor = db.rawQuery(cmdsOrSearch, null);
+        cmdOrSearch = cmdOrSearch + cmdSubquery;
+        //下指令
+        cursor = db.rawQuery(cmdOrSearch, null);
+        //移動到第一筆資料
         cursor.moveToFirst();
-
+        //宣告一個ArrayList<Integer> 用來存放符合搜尋的ID
         ArrayList<Integer> ids = new ArrayList<>();
         for (int i = 0; i < cursor.getCount(); i++) {
             ids.add(cursor.getInt(i));
             cursor.moveToNext();
         }
+        //回傳ID
         return ids;
     }
 
-
+    //重設搜尋命令
     public void resetCmds() {
-        cmdsSubquery = "(select t_id,tag from " + tagTable + " where tag = ";
-        cmdsOrSearch = "select distinct t_id from ";
-        cmdsAndSearch = "select t_id from ";
+        cmdSubquery = "(select t_id,tag from " + tagTable + " where tag = ";
+        cmdOrSearch = "select distinct t_id from ";
+        cmdAndSearch = "select t_id from ";
+        cmdGetTag = "select tag from " + tagTable + " where t_id = ";
     }
 
     //判斷是否資料庫為空
@@ -95,16 +101,52 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor = db.query(dinnerTable, null, null, null, null, null, null);
         // 如果沒有第一筆資料 回傳false
         return !cursor.moveToFirst();
-
     }
-
-    public void insertDinner(DinnerData dinnerData) {
+    //拿取dinnerTable中最後一筆資料(最新加進去的)的ID
+    public int getLastDinnerId() {
+        cursor = db.query(dinnerTable, null, null, null, null, null, null);
+        cursor.moveToLast();
+        return cursor.getInt(0);
+    }
+    //加入tagTable
+    public void insertTag(int id, ArrayList<String> tags) {
+        ContentValues contentValues;
+        for (String tag : tags) {
+            //每個TAG分別為一筆 加入資料庫
+            contentValues = new ContentValues();
+            contentValues.put("t_id", id);
+            contentValues.put("tag", tag);
+            db.insert(tagTable, null, contentValues);
+        }
+    }
+    //同時加入dinnerTable&tagTable
+    public void insertDinnerAndTag(DinnerData dinnerData) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("shop", dinnerData.shop);
         contentValues.put("meal", dinnerData.meal);
         contentValues.put("price", dinnerData.price);
         contentValues.put("tag", dinnerData.tag);
         db.insert(dinnerTable, null, contentValues);
+        //拿取剛剛加進去的那筆的ID
+        insertTag(getLastDinnerId(), dinnerData.getTags());
+    }
+
+    public String getTag(int id) {
+        Cursor tagCursor;
+        String s = "";
+        cmdGetTag = cmdGetTag + id;
+        tagCursor = db.rawQuery(cmdGetTag, null);
+
+        if (tagCursor.moveToFirst()) {
+            tagCursor.moveToFirst();
+            s = tagCursor.getString(0);
+            for (int i = 1; i < tagCursor.getCount(); i++) {
+                s = s + "," + tagCursor.getString(0);
+                tagCursor.moveToNext();
+            }
+        }
+        resetCmds();
+        return s;
     }
 
     public ArrayList<DinnerData> getAllDinnerData() {

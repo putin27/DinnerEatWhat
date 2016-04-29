@@ -19,4 +19,6 @@ public interface MainView {
     void switchToMainView();
 
     void initDinnerRecyeclerView(ArrayList<DinnerData> dinnerDatas);
+
+    void showToast(String msg);
 }
