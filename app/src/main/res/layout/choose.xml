@@ -1,85 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:weightSum="1">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="AND搜尋(所有標籤都符合)" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="OR搜尋(其中一個標籤符合)" />
+
+        </RadioGroup>
+    </LinearLayout>
+
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="需求標籤"
-        android:textSize = "40sp"
-        android:id="@+id/textView" />
+        android:textSize="30sp" />
 
     <EditText
+        android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
         android:layout_gravity="center_horizontal" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="除外標籤"
-        android:textSize = "40sp"
-        android:id="@+id/textView2" />
+        android:textSize="30sp" />
 
     <EditText
+        android:id="@+id/editText2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText2" />
+        android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="價錢"
-        android:textSize = "40sp"
-        android:id="@+id/textView3" />
+        android:text="價錢(不填為不設限)"
+        android:textSize="30sp" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.04">
+        android:layout_weight="0.04"
+        android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/editText3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText3"
-            android:textSize = "40sp"
             android:layout_weight="0.40"
-            android:text="0" />
+            android:hint="0"
+            android:textColorHint="@color/colorHint"
+            android:textSize="40sp" />
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="~"
-            android:textSize = "40sp"
-            android:id="@+id/textView4" />
+            android:textSize="40sp" />
 
         <EditText
+            android:id="@+id/editText4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText4"
-            android:textSize = "40sp"
             android:layout_weight="0.40"
-            android:text="100" />
+            android:hint="100"
+            android:textColorHint="@color/colorHint"
+            android:textSize="40sp" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="隨機選餐"
-        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
         android:onClick="onTagChooseDinnerClick"
-        android:layout_gravity="center_horizontal" />
+        android:text="隨機選餐" />
 
     <CheckBox
+        android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="推薦餐點"
-        android:id="@+id/checkBox"
         android:layout_gravity="center_horizontal"
-        android:checked="false" />
+        android:checked="false"
+        android:text="推薦餐點" />
 
 </LinearLayout>
