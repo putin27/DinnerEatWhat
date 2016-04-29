@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements MainView, DinnerAdapter.EditButtonListener {
 
     private MainPresenter presenter;
+    private int searchType = SearchType.or;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     @Override
     public void switchToChooseDinner() {
         setContentView(R.layout.choose);
+        RadioButton rbOr = (RadioButton) findViewById(R.id.rb_or);
+        assert rbOr != null;
+        rbOr.setChecked(true);
     }
 
     @Override
@@ -175,5 +180,17 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
 
     public void onGoEditDinnerClick(View view) {
         presenter.onGoEditDinnerClick();
+    }
+
+    public void onRadioButtonClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.rb_and:
+                searchType = SearchType.and;
+                break;
+            case R.id.rb_or:
+                searchType = SearchType.or;
+                break;
+        }
     }
 }
