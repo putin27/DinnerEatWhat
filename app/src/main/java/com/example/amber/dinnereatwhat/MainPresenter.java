@@ -29,9 +29,7 @@ public class MainPresenter {
     }
 
     public void onTagChooseDinnerClick(int searchType,String tags) {
-        if (searchType == SearchType.or) {
-            view.switchToFinalDinner(model.getFinalDinnerByTag(tags));
-        }
+            view.switchToFinalDinner(model.getFinalDinnerByTag(searchType,tags));
     }
 
     public void onChooseAgainClick() {

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements MainView, DinnerAdapter.EditButtonListener {
 
     private MainPresenter presenter;
-    private int searchType = SearchType.or;
+    private int searchType = SearchType.OR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,10 +205,10 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
 
         switch (view.getId()) {
             case R.id.rb_and:
-                searchType = SearchType.and;
+                searchType = SearchType.AND;
                 break;
             case R.id.rb_or:
-                searchType = SearchType.or;
+                searchType = SearchType.OR;
                 break;
         }
     }

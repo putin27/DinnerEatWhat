@@ -53,9 +53,15 @@ public class MainModel {
         return dbHelper.getDinnerDataById(ids.get(random.nextInt(ids.size())));
     }
 
-    public DinnerData getFinalDinnerByTag(String tags) {
+    public DinnerData getFinalDinnerByTag(int searchType, String tags) {
+        //判斷是哪種搜尋模式
         //取得符合搜尋結果的ids
-        this.ids = dbHelper.orSearch(DinnerData.getTags(tags));
+        if(searchType == SearchType.OR){
+            this.ids = dbHelper.orSearch(DinnerData.getTags(tags));
+        }
+        else if(searchType==SearchType.AND){
+            this.ids = dbHelper.andSearch(DinnerData.getTags(tags));
+        }
         //如果ids裡沒東西 回傳無搜尋結果的預設值
         if (ids.size() == 0) {
             return new DinnerData("null", "", 0, "");

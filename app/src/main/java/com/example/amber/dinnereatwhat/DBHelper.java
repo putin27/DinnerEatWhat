@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -81,6 +82,33 @@ public class DBHelper extends SQLiteOpenHelper {
         //得到符合搜尋結果的ids
 
         //宣告一個ArrayList<Integer> 用來存放符合搜尋的ID
+        ArrayList<Integer> ids = new ArrayList<>();
+        //如果搜尋結果不是NULL
+        if (cursor.moveToFirst()) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                ids.add(cursor.getInt(0));
+                cursor.moveToNext();
+            }
+        }
+        //回傳ID
+        resetCmds();
+        return ids;
+    }
+
+    //AND搜尋
+    public ArrayList<Integer> andSearch(ArrayList<String> tags) {
+        //組成AND搜尋指令
+        cmdSubquery = cmdSubquery + "'" + tags.get(0) + "' ";
+        for (int i = 1; i < tags.size(); i++) {
+            cmdSubquery = cmdSubquery + "or tag = '" + tags.get(i) + "' ";
+        }
+        cmdSubquery = cmdSubquery + ") ";
+        cmdAndSearch = cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + tags.size();
+        Log.i("dinnerEatWhat", cmdAndSearch);
+        //下指令
+        cursor = db.rawQuery(cmdAndSearch, null);
+        //得到符合搜尋結果的ids
+
         ArrayList<Integer> ids = new ArrayList<>();
         //如果搜尋結果不是NULL
         if (cursor.moveToFirst()) {
