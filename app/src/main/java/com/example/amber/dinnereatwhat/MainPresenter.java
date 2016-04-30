@@ -28,12 +28,14 @@ public class MainPresenter {
         view.switchToAddDinner();
     }
 
-    public void onTagChooseDinnerClick() {
-        view.switchToFinalDinner(model.getFinalDinnerFast());
+    public void onTagChooseDinnerClick(int searchType,String tags) {
+        if (searchType == SearchType.or) {
+            view.switchToFinalDinner(model.getFinalDinnerByTag(tags));
+        }
     }
 
     public void onChooseAgainClick() {
-        view.chooseAgain(model.getFinalDinnerFast());
+        view.chooseAgain(model.getAgain());
     }
 
     public void onKeyDown() {
@@ -47,6 +49,7 @@ public class MainPresenter {
     public void onGoEditDinnerClick() {
         view.initDinnerRecyeclerView(model.getAllDinnerData());
     }
+
     //按下加入晚餐頁面的新增按鈕
     public void onAddDinnerClick(DinnerData dinnerData) {
         //叫model去加入晚餐

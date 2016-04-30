@@ -34,20 +34,18 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="需求標籤"
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/choose_et_tag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal" />
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="除外標籤"
@@ -59,7 +57,6 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="價錢(不填為不設限)"
@@ -81,7 +78,6 @@
             android:textSize="40sp" />
 
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="~"
@@ -98,7 +94,6 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

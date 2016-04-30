@@ -6,6 +6,7 @@
     android:weightSum="1">
 
     <TextView
+        android:id="@+id/final_dinner_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -13,7 +14,25 @@
         android:textSize="40sp" />
 
     <TextView
-        android:id="@+id/tv_finaldinner"
+        android:id="@+id/final_dinner_tv_shop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="隨機店名"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/final_dinner_tv_der"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="的"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/final_dinner_tv_meal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -22,7 +41,7 @@
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/tv_price"
+        android:id="@+id/final_dinner_tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -30,7 +49,7 @@
         android:textSize="30sp" />
 
     <Button
-        android:id="@+id/b_restart"
+        android:id="@+id/final_dinner_b_choose_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

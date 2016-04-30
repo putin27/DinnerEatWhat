@@ -78,24 +78,12 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     public void switchToFinalDinner(DinnerData dinnerData) {
         //依照傳入的DinerData設定顯示的文字
         setContentView(R.layout.final_dinner);
-        TextView textView1 = (TextView) findViewById(R.id.tv_finaldinner);
-        assert textView1 != null;
-        textView1.setText(dinnerData.toString());
-        TextView textView2 = (TextView) findViewById(R.id.tv_price);
-        assert textView2 != null;
-        textView2.setText(dinnerData.getPrice() + "元");
+        setFinalDinner(dinnerData);
     }
 
     @Override
     public void chooseAgain(DinnerData dinnerData) {
-        //在final_dinner頁面下
-        //依照傳入的DinerData設定顯示的文字
-        TextView textView = (TextView) findViewById(R.id.tv_finaldinner);
-        assert textView != null;
-        textView.setText(dinnerData.toString());
-        TextView textView2 = (TextView) findViewById(R.id.tv_price);
-        assert textView2 != null;
-        textView2.setText(dinnerData.getPrice() + "元");
+        setFinalDinner(dinnerData);
     }
 
     //手機實體鍵
@@ -115,6 +103,35 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         presenter.onEditButtonClick(position);
     }
 
+    private void setFinalDinner(DinnerData dinnerData) {
+        TextView tvShop, tvMeal, tvPrice;
+
+        tvShop = (TextView) findViewById(R.id.final_dinner_tv_shop);
+        assert tvShop != null;
+        tvMeal = (TextView) findViewById(R.id.final_dinner_tv_meal);
+        assert tvMeal != null;
+        tvPrice = (TextView) findViewById(R.id.final_dinner_tv_price);
+        assert tvPrice != null;
+
+        if (dinnerData.getShop().equals("null")) {
+            TextView tvTilte = (TextView) findViewById(R.id.final_dinner_tv_title);
+            TextView tvDer = (TextView) findViewById(R.id.final_dinner_tv_der);
+            assert tvTilte != null;
+            tvTilte.setText("無搜尋結果");
+            assert tvDer != null;
+            tvDer.setText("");
+            tvShop.setText("");
+            tvMeal.setText("");
+            tvPrice.setText("");
+            return;
+        }
+
+        tvShop.setText(dinnerData.getShop());
+        tvMeal.setText(dinnerData.getMeal());
+        tvPrice.setText(dinnerData.getPrice() + "元");
+
+    }
+
     //取得RecyclerView
     private RecyclerView getRecyclerView() {
         return (RecyclerView) findViewById(R.id.dinner_recycler_view);
@@ -131,8 +148,6 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     //按下加入晚餐頁面的新增按鈕
     public void onAddDinnerClick(View view) {
         DinnerData dinnerData;
-        //資料是否正確
-        boolean isDataCorrect = true;
         EditText etStore = (EditText) findViewById(R.id.et_store);
         EditText etMeal = (EditText) findViewById(R.id.et_meal);
         EditText etPrice = (EditText) findViewById(R.id.et_price);
@@ -148,25 +163,29 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
                 //顯示錯誤訊息給使用者
                 showToast("該項為必填項目!!!");
                 //設定資料還沒準備好
-                isDataCorrect = false;
-                break;
+                return;
             }
         }
         //如果資料還沒準備好就不寫入資料庫
         //如果資料準備好才寫入資料庫
-        if (isDataCorrect) {
-            assert etStore != null;
-            assert etPrice != null;
-            assert etMeal != null;
-            assert etTag != null;
-            dinnerData = new DinnerData(etStore.getText().toString(), etMeal.getText().toString(),
-                    Integer.parseInt(etPrice.getText().toString(), 10), etTag.getText().toString());
-            presenter.onAddDinnerClick(dinnerData);
+        assert etStore != null;
+        assert etPrice != null;
+        assert etMeal != null;
+        assert etTag != null;
+        dinnerData = new DinnerData(etStore.getText().toString(), etMeal.getText().toString(),
+                Integer.parseInt(etPrice.getText().toString(), 10), etTag.getText().toString());
+        presenter.onAddDinnerClick(dinnerData);
+        //新增成功後清空
+        for (EditText aCheck : check) {
+            aCheck.setText("");
         }
     }
 
     public void onTagChooseDinnerClick(View view) {
-        presenter.onTagChooseDinnerClick();
+        //需求TAG是否必填?
+        EditText etTag = (EditText) findViewById(R.id.choose_et_tag);
+        assert etTag != null;
+        presenter.onTagChooseDinnerClick(searchType, etTag.getText().toString());
     }
 
     public void onChooseAgainClick(View view) {

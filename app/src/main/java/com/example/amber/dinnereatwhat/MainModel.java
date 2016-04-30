@@ -7,6 +7,7 @@ import java.util.Random;
 public class MainModel {
     private MainActivity activity;
     private DBHelper dbHelper;
+    private ArrayList<Integer> ids;
 
     public MainModel(MainActivity activity) {
         this.activity = activity;
@@ -26,14 +27,16 @@ public class MainModel {
             dbHelper.insertDinnerAndTag(new DinnerData("天狗", "雞排鐵板麵", 75, "G"));
         }
     }
+
     //加入晚餐
     public void addDinnerData(DinnerData dinnerData) {
         dbHelper.insertDinnerAndTag(dinnerData);
-        if(!dinnerData.isTagEmpty()) {
+        if (!dinnerData.isTagEmpty()) {
             ArrayList<String> tags = new ArrayList<>();
-            dbHelper.insertTag(dbHelper.getLastDinnerId(),tags);
+            dbHelper.insertTag(dbHelper.getLastDinnerId(), tags);
         }
     }
+
     //取得所有的晚餐資料
     public ArrayList<DinnerData> getAllDinnerData() {
         return dbHelper.getAllDinnerData();
@@ -41,7 +44,34 @@ public class MainModel {
 
     //快速隨機取得晚餐
     public DinnerData getFinalDinnerFast() {
+        this.ids = dbHelper.fastSearch();
+        //如果ids裡沒東西 回傳無搜尋結果的預設值
+        if (ids.size() == 0) {
+            return new DinnerData("null", "", 0, "");
+        }
         Random random = new Random();
-        return dbHelper.getDinnerData(random.nextInt(dbHelper.getSize()));
+        return dbHelper.getDinnerDataById(ids.get(random.nextInt(ids.size())));
+    }
+
+    public DinnerData getFinalDinnerByTag(String tags) {
+        //取得符合搜尋結果的ids
+        this.ids = dbHelper.orSearch(DinnerData.getTags(tags));
+        //如果ids裡沒東西 回傳無搜尋結果的預設值
+        if (ids.size() == 0) {
+            return new DinnerData("null", "", 0, "");
+        }
+        Random random = new Random();
+        //隨機取得其中一個ID
+        //並從資料庫中取出
+        return dbHelper.getDinnerDataById(ids.get(random.nextInt(ids.size())));
+    }
+
+    public DinnerData getAgain() {
+        //如果ids裡沒東西 回傳無搜尋結果的預設值
+        if (ids.size() == 0) {
+            return new DinnerData("null", "", 0, "");
+        }
+        Random random = new Random();
+        return dbHelper.getDinnerDataById(ids.get(random.nextInt(ids.size())));
     }
 }

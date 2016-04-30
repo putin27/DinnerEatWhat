@@ -25,6 +25,12 @@ public class DinnerData {
     public String toString() {
         return shop + "的" + meal;
     }
+    public String getShop(){
+        return shop;
+    }
+    public String getMeal(){
+        return meal;
+    }
 
     public int getPrice() {
         return price;
@@ -40,6 +46,14 @@ public class DinnerData {
         }
         return tag;
     }
+    public  static ArrayList<String> getTags(String tag){
+        ArrayList<String> tags = new ArrayList<>();
+        String[] tagArray;
+        tagArray = tag.trim().split(",");
+        Collections.addAll(tags, tagArray);
+        return tags;
+    }
+
     //回傳分割好的tag
     public ArrayList<String> getTags() {
         ArrayList<String> tags = new ArrayList<>();

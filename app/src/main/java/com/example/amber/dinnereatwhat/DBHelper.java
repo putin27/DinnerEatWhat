@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 
 //table的第一筆資料 cursor的position從0開始 裡面的_id是第0個欄位 所以資料從1開始取
+//_id會從1開始建立
 
 public class DBHelper extends SQLiteOpenHelper {
     //資料庫名稱
@@ -63,34 +64,39 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onCreate(db);
     }
+
     //OR搜尋
     public ArrayList<Integer> orSearch(ArrayList<String> tags) {
 
         //組成OR搜尋的指令
         cmdSubquery = cmdSubquery + "'" + tags.get(0) + "' ";
         for (int i = 1; i < tags.size(); i++) {
-            cmdSubquery = cmdSubquery + "or '" + tags.get(i) + "'";
+            cmdSubquery = cmdSubquery + "or tag = '" + tags.get(i) + "' ";
         }
-        cmdSubquery = cmdSubquery + ") ";
+        cmdSubquery = cmdSubquery + ")";
 
         cmdOrSearch = cmdOrSearch + cmdSubquery;
         //下指令
         cursor = db.rawQuery(cmdOrSearch, null);
-        //移動到第一筆資料
-        cursor.moveToFirst();
+        //得到符合搜尋結果的ids
+
         //宣告一個ArrayList<Integer> 用來存放符合搜尋的ID
         ArrayList<Integer> ids = new ArrayList<>();
-        for (int i = 0; i < cursor.getCount(); i++) {
-            ids.add(cursor.getInt(i));
-            cursor.moveToNext();
+        //如果搜尋結果不是NULL
+        if (cursor.moveToFirst()) {
+            for (int i = 0; i < cursor.getCount(); i++) {
+                ids.add(cursor.getInt(0));
+                cursor.moveToNext();
+            }
         }
         //回傳ID
+        resetCmds();
         return ids;
     }
 
     //重設搜尋命令
     public void resetCmds() {
-        cmdSubquery = "(select t_id,tag from " + tagTable + " where tag = ";
+        cmdSubquery = "(select t_id from " + tagTable + " where tag = ";
         cmdOrSearch = "select distinct t_id from ";
         cmdAndSearch = "select t_id from ";
         cmdGetTag = "select tag from " + tagTable + " where t_id = ";
@@ -102,12 +108,14 @@ public class DBHelper extends SQLiteOpenHelper {
         // 如果沒有第一筆資料 回傳false
         return !cursor.moveToFirst();
     }
+
     //拿取dinnerTable中最後一筆資料(最新加進去的)的ID
     public int getLastDinnerId() {
         cursor = db.query(dinnerTable, null, null, null, null, null, null);
         cursor.moveToLast();
         return cursor.getInt(0);
     }
+
     //加入tagTable
     public void insertTag(int id, ArrayList<String> tags) {
         ContentValues contentValues;
@@ -119,6 +127,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.insert(tagTable, null, contentValues);
         }
     }
+
     //同時加入dinnerTable&tagTable
     public void insertDinnerAndTag(DinnerData dinnerData) {
         ContentValues contentValues = new ContentValues();
@@ -158,6 +167,24 @@ public class DBHelper extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
         return dinnerDatas;
+    }
+
+    public ArrayList<Integer> fastSearch() {
+        ArrayList<Integer> ids = new ArrayList<>();
+        cursor = db.query(dinnerTable, null, null, null, null, null, null);
+        cursor.moveToFirst();
+        for (int i = 0; i < cursor.getCount(); i++) {
+            ids.add(cursor.getInt(0));
+            cursor.moveToNext();
+        }
+        return ids;
+    }
+
+    public DinnerData getDinnerDataById(int id) {
+        String cmdId = "select * from " + dinnerTable + " where _id = " + id;
+        cursor = db.rawQuery(cmdId, null);
+        cursor.moveToFirst();
+        return new DinnerData(cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
     }
 
     public DinnerData getDinnerData(int position) {
