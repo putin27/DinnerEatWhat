@@ -231,6 +231,11 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(tagTable,"t_id = "+id,null);
     }
 
+    public void delDinnerAndTag(int id){
+        db.delete(tagTable,"t_id = "+id,null);
+        db.delete(dinnerTable,"_id = "+id,null);
+    }
+
     public void updateDinnerData(DinnerData dinnerData) {
         //更新dinnerTable
         ContentValues values = new ContentValues();

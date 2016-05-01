@@ -1,5 +1,7 @@
 package com.example.amber.dinnereatwhat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -248,5 +250,26 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     }
 
     public void onDelButtonClick(View view) {
+        //跳出警告訊息
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("警告");
+        builder.setMessage("你確定要刪除此晚餐嗎?");
+        builder.setNegativeButton("刪除", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //刪除
+                MainActivity.this.presenter.onDelButtonClick();
+            }
+        });
+        builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //顯示取消刪除
+                showToast("取消刪除!");
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

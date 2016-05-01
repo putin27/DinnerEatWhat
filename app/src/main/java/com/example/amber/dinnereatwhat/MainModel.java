@@ -90,4 +90,8 @@ public class MainModel {
         dinnerData.setId(editingId);
         dbHelper.updateDinnerData(dinnerData);
     }
+
+    public void delDinnerAndTag() {
+        dbHelper.delDinnerAndTag(editingId);
+    }
 }

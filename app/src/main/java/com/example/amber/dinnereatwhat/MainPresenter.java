@@ -61,4 +61,10 @@ public class MainPresenter {
         view.showToast("編輯成功!!!");
         view.switchToMainView();
     }
+
+    public void onDelButtonClick() {
+        model.delDinnerAndTag();
+        view.showToast("刪除成功!!!");
+        view.switchToMainView();
+    }
 }
