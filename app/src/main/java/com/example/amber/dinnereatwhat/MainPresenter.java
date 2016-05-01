@@ -29,7 +29,7 @@ public class MainPresenter {
     }
 
     public void onTagChooseDinnerClick(int searchType,String tags) {
-            view.switchToFinalDinner(model.getFinalDinnerByTag(searchType,tags));
+            view.switchToFinalDinner(model.getFinalDinnerByTag(searchType, tags));
     }
 
     public void onChooseAgainClick() {
@@ -40,11 +40,11 @@ public class MainPresenter {
         view.switchToMainView();
     }
 
-    public void onEditButtonClick(int position) {
-
+    public void onGoEditButtonClick(int position) {
+        view.switchToEditDinner(model.getDinnerDataByPosition(position));
     }
 
-    public void onGoEditDinnerClick() {
+    public void onGoViewDinnerClick() {
         view.initDinnerRecyeclerView(model.getAllDinnerData());
     }
 
@@ -54,5 +54,11 @@ public class MainPresenter {
         model.addDinnerData(dinnerData);
         //叫view顯示成功加入訊息給使用者
         view.showToast("新增成功!!!");
+    }
+
+    public void onEditButtonClick(DinnerData dinnerData) {
+        model.updateEditingDinnerData(dinnerData);
+        view.showToast("編輯成功!!!");
+        view.switchToMainView();
     }
 }

@@ -6,13 +6,22 @@ import java.util.Collections;
 //餐點資料格式
 public class DinnerData {
 
-    protected String shop;
-    protected String meal;
-    protected int price;
-    protected String tag;
+    private int id;
+    private String shop;
+    private String meal;
+    private int price;
+    private String tag;
 
     public DinnerData() {
 
+    }
+
+    public DinnerData(int id, String shop, String meal, int price, String tag) {
+        this.id = id;
+        this.shop = shop;
+        this.meal = meal;
+        this.price = price;
+        this.tag = tag;
     }
 
     public DinnerData(String shop, String meal, int price, String tag) {
@@ -25,10 +34,16 @@ public class DinnerData {
     public String toString() {
         return shop + "的" + meal;
     }
-    public String getShop(){
+
+    public int getId() {
+        return id;
+    }
+
+    public String getShop() {
         return shop;
     }
-    public String getMeal(){
+
+    public String getMeal() {
         return meal;
     }
 
@@ -46,7 +61,8 @@ public class DinnerData {
         }
         return tag;
     }
-    public  static ArrayList<String> getTags(String tag){
+
+    public static ArrayList<String> getTags(String tag) {
         ArrayList<String> tags = new ArrayList<>();
         String[] tagArray;
         tagArray = tag.trim().split(",");
@@ -61,5 +77,9 @@ public class DinnerData {
         tagArray = tag.trim().split(",");
         Collections.addAll(tags, tagArray);
         return tags;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

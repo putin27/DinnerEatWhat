@@ -8,6 +8,7 @@ public class MainModel {
     private MainActivity activity;
     private DBHelper dbHelper;
     private ArrayList<Integer> ids;
+    private int editingId;
 
     public MainModel(MainActivity activity) {
         this.activity = activity;
@@ -37,6 +38,11 @@ public class MainModel {
         }
     }
 
+    public DinnerData getDinnerDataByPosition(int position) {
+        editingId = dbHelper.getDinnerDataByPosition(position).getId();
+        return dbHelper.getDinnerDataByPosition(position);
+    }
+
     //取得所有的晚餐資料
     public ArrayList<DinnerData> getAllDinnerData() {
         return dbHelper.getAllDinnerData();
@@ -56,10 +62,9 @@ public class MainModel {
     public DinnerData getFinalDinnerByTag(int searchType, String tags) {
         //判斷是哪種搜尋模式
         //取得符合搜尋結果的ids
-        if(searchType == SearchType.OR){
+        if (searchType == SearchType.OR) {
             this.ids = dbHelper.orSearch(DinnerData.getTags(tags));
-        }
-        else if(searchType==SearchType.AND){
+        } else if (searchType == SearchType.AND) {
             this.ids = dbHelper.andSearch(DinnerData.getTags(tags));
         }
         //如果ids裡沒東西 回傳無搜尋結果的預設值
@@ -79,5 +84,10 @@ public class MainModel {
         }
         Random random = new Random();
         return dbHelper.getDinnerDataById(ids.get(random.nextInt(ids.size())));
+    }
+
+    public void updateEditingDinnerData(DinnerData dinnerData) {
+        dinnerData.setId(editingId);
+        dbHelper.updateDinnerData(dinnerData);
     }
 }

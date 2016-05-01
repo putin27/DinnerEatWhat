@@ -159,10 +159,10 @@ public class DBHelper extends SQLiteOpenHelper {
     //同時加入dinnerTable&tagTable
     public void insertDinnerAndTag(DinnerData dinnerData) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put("shop", dinnerData.shop);
-        contentValues.put("meal", dinnerData.meal);
-        contentValues.put("price", dinnerData.price);
-        contentValues.put("tag", dinnerData.tag);
+        contentValues.put("shop", dinnerData.getShop());
+        contentValues.put("meal", dinnerData.getMeal());
+        contentValues.put("price", dinnerData.getPrice());
+        contentValues.put("tag", dinnerData.getTag());
         db.insert(dinnerTable, null, contentValues);
         //拿取剛剛加進去的那筆的ID
         insertTag(getLastDinnerId(), dinnerData.getTags());
@@ -191,7 +191,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor = db.query(dinnerTable, null, null, null, null, null, null);
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
-            dinnerDatas.add(new DinnerData(cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4)));
+            dinnerDatas.add(new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4)));
             cursor.moveToNext();
         }
         return dinnerDatas;
@@ -212,18 +212,37 @@ public class DBHelper extends SQLiteOpenHelper {
         String cmdId = "select * from " + dinnerTable + " where _id = " + id;
         cursor = db.rawQuery(cmdId, null);
         cursor.moveToFirst();
-        return new DinnerData(cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+        return new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
     }
 
-    public DinnerData getDinnerData(int position) {
+    public DinnerData getDinnerDataByPosition(int position) {
         cursor = db.query(dinnerTable, null, null, null, null, null, null);
         cursor.moveToPosition(position);
-        return new DinnerData(cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+        return new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
     }
 
     public int getSize() {
         cursor = db.query(dinnerTable, null, null, null, null, null, null);
 
         return cursor.getCount();
+    }
+
+    public void delTagById(int id){
+        db.delete(tagTable,"t_id = "+id,null);
+    }
+
+    public void updateDinnerData(DinnerData dinnerData) {
+        //更新dinnerTable
+        ContentValues values = new ContentValues();
+        values.put("shop", dinnerData.getShop());
+        values.put("meal", dinnerData.getMeal());
+        values.put("price", dinnerData.getPrice());
+        values.put("tag", dinnerData.getTag());
+        db.update(dinnerTable, values, "_id = " + dinnerData.getId(), null);
+
+        //刪除舊的tag
+        delTagById(dinnerData.getId());
+        //寫入新的tag
+        insertTag(dinnerData.getId(),dinnerData.getTags());
     }
 }

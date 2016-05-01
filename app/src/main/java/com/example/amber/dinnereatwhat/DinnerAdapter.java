@@ -40,7 +40,7 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.ViewHolder
         holder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onEditButtonClick(holder.getLayoutPosition());
+                mListener.onGoEditButtonClick(holder.getLayoutPosition());
             }
         });
     }
@@ -70,6 +70,6 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.ViewHolder
     }
     //宣告監聽按鈕的interface
     public interface EditButtonListener {
-        void onEditButtonClick(int position);
+        void onGoEditButtonClick(int position);
     }
 }

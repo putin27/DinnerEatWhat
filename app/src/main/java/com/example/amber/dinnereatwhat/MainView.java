@@ -21,4 +21,6 @@ public interface MainView {
     void initDinnerRecyeclerView(ArrayList<DinnerData> dinnerDatas);
 
     void showToast(String msg);
+
+    void switchToEditDinner(DinnerData dinnerData);
 }

@@ -52,6 +52,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.08"
-        android:onClick="onGoEditDinnerClick"
+        android:onClick="onGoViewDinnerClick"
         android:text="@string/edit_dinner" />
 </LinearLayout>

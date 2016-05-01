@@ -14,7 +14,7 @@
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/et_store"
+        android:id="@+id/et_shop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="請輸入店家名稱..."

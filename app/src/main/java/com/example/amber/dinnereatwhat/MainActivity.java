@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     @Override
     public void initDinnerRecyeclerView(ArrayList<DinnerData> dinnerDatas) {
         //切換至edit_dinner
-        setContentView(R.layout.edit_dinner);
+        setContentView(R.layout.view_dinner);
         //宣告&new出自訂的Adapter
         DinnerAdapter dinnerAdapter = new DinnerAdapter(dinnerDatas, this);
         //取得RecyeclerView
@@ -72,6 +72,25 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     @Override
     public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void switchToEditDinner(DinnerData dinnerData) {
+        setContentView(R.layout.edit_dinner);
+        EditText etShop, etMeal, etPrice, etTag;
+        etShop = (EditText) findViewById(R.id.edit_dinner_et_shop);
+        etMeal = (EditText) findViewById(R.id.edit_dinner_et_meal);
+        etPrice = (EditText) findViewById(R.id.edit_dinner_et_price);
+        etTag = (EditText) findViewById(R.id.edit_dinner_et_tag);
+
+        assert etShop != null;
+        etShop.setText(dinnerData.getShop());
+        assert etMeal != null;
+        etMeal.setText(dinnerData.getMeal());
+        assert etPrice != null;
+        etPrice.setText("" + dinnerData.getPrice());
+        assert etTag != null;
+        etTag.setText(dinnerData.getTag());
     }
 
     @Override
@@ -99,8 +118,8 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
 
     //按下編輯頁面的編輯按鈕
     @Override
-    public void onEditButtonClick(int position) {
-        presenter.onEditButtonClick(position);
+    public void onGoEditButtonClick(int position) {
+        presenter.onGoEditButtonClick(position);
     }
 
     private void setFinalDinner(DinnerData dinnerData) {
@@ -148,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     //按下加入晚餐頁面的新增按鈕
     public void onAddDinnerClick(View view) {
         DinnerData dinnerData;
-        EditText etStore = (EditText) findViewById(R.id.et_store);
+        EditText etStore = (EditText) findViewById(R.id.et_shop);
         EditText etMeal = (EditText) findViewById(R.id.et_meal);
         EditText etPrice = (EditText) findViewById(R.id.et_price);
         EditText etTag = (EditText) findViewById(R.id.et_tag);
@@ -197,12 +216,11 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         presenter.onGoAddDinnerClick();
     }
 
-    public void onGoEditDinnerClick(View view) {
-        presenter.onGoEditDinnerClick();
+    public void onGoViewDinnerClick(View view) {
+        presenter.onGoViewDinnerClick();
     }
 
     public void onRadioButtonClick(View view) {
-
         switch (view.getId()) {
             case R.id.rb_and:
                 searchType = SearchType.AND;
@@ -211,5 +229,24 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
                 searchType = SearchType.OR;
                 break;
         }
+    }
+
+    public void onEditButtonClick(View view) {
+        EditText etShop, etMeal, etPrice, etTag;
+        etShop = (EditText) findViewById(R.id.edit_dinner_et_shop);
+        etMeal = (EditText) findViewById(R.id.edit_dinner_et_meal);
+        etPrice = (EditText) findViewById(R.id.edit_dinner_et_price);
+        etTag = (EditText) findViewById(R.id.edit_dinner_et_tag);
+
+        assert etShop != null;
+        assert etMeal != null;
+        assert etPrice != null;
+        assert etTag != null;
+        DinnerData dinnerData = new DinnerData(etShop.getText().toString(), etMeal.getText().toString(),
+                Integer.parseInt(etPrice.getText().toString(), 10), etTag.getText().toString());
+        presenter.onEditButtonClick(dinnerData);
+    }
+
+    public void onDelButtonClick(View view) {
     }
 }
