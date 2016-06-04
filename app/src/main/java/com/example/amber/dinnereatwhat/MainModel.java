@@ -59,14 +59,10 @@ public class MainModel {
         return dbHelper.getDinnerDataById(ids.get(random.nextInt(ids.size())));
     }
 
-    public DinnerData getFinalDinnerByTag(int searchType, String tags) {
-        //判斷是哪種搜尋模式
-        //取得符合搜尋結果的ids
-        if (searchType == SearchType.OR) {
-            this.ids = dbHelper.orSearch(DinnerData.getTags(tags));
-        } else if (searchType == SearchType.AND) {
-            this.ids = dbHelper.andSearch(DinnerData.getTags(tags));
-        }
+    public DinnerData getFinalDinnerByTag(int searchType, String needTtags, String exceptTags, int price1, int price2) {
+
+        this.ids = dbHelper.search(searchType, needTtags, exceptTags, price1, price2);
+
         //如果ids裡沒東西 回傳無搜尋結果的預設值
         if (ids.size() == 0) {
             return new DinnerData("null", "", 0, "");

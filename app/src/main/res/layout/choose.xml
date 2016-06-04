@@ -40,10 +40,11 @@
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/choose_et_tag"
+        android:id="@+id/choose_et_need_tag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:hint="用逗號分開(ex:a,b,c)"
+        android:textColorHint="@color/colorHint" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,9 +53,11 @@
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/choose_et_except_tag"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="用逗號分開(ex:a,b,c)"
+        android:textColorHint="@color/colorHint" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -69,11 +72,12 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/choose_et_price1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.40"
             android:hint="0"
+            android:inputType="number"
             android:textColorHint="@color/colorHint"
             android:textSize="40sp" />
 
@@ -84,11 +88,12 @@
             android:textSize="40sp" />
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/choose_et_price2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.40"
             android:hint="100"
+            android:inputType="number"
             android:textColorHint="@color/colorHint"
             android:textSize="40sp" />
     </LinearLayout>

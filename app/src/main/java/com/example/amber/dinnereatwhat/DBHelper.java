@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -42,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //rawquery指令
     //OR搜尋 AND搜尋 子搜尋
     //寫入新的字串時 保持前面不留 後面有一個空白 防止指令黏在一起造成指令錯誤
-    private String cmdOrSearch, cmdAndSearch, cmdSubquery, cmdGetTag;
+    private String cmdOrSearch, cmdAndSearch, cmdSubquery, cmdExcept, cmdExceptSub, cmdGetTag;
 
     private SQLiteDatabase db;
     private Cursor cursor;
@@ -66,23 +65,58 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //OR搜尋
-    public ArrayList<Integer> orSearch(ArrayList<String> tags) {
+    public ArrayList<Integer> search(int searchType, String needTag, String exceptTag, int price1, int price2) {
 
-        //組成OR搜尋的指令
-        cmdSubquery = cmdSubquery + "'" + tags.get(0) + "' ";
-        for (int i = 1; i < tags.size(); i++) {
-            cmdSubquery = cmdSubquery + "or tag = '" + tags.get(i) + "' ";
+        String cmdSearch;
+        ArrayList<String> needTags = null, exceptTags = null;
+
+        //如果需求tag不是空的
+        //建立搜尋tag
+        if (!needTag.isEmpty()) {
+            needTags = DinnerData.getTags(needTag);
+            cmdSubquery = buildCmdSub(cmdSubquery, needTags);
         }
-        cmdSubquery = cmdSubquery + ")";
+        //如果除外tag不是空的
+        //建立搜尋tag
+        if (!exceptTag.isEmpty()) {
+            exceptTags = DinnerData.getTags(exceptTag);
+            cmdExceptSub = buildCmdSub(cmdExceptSub, exceptTags);
+        }
 
-        cmdOrSearch = cmdOrSearch + cmdSubquery;
-        //下指令
-        cursor = db.rawQuery(cmdOrSearch, null);
-        //得到符合搜尋結果的ids
+        //判斷需求tag是否為空
+        if (needTags != null) {
+            //判斷是OR還是AND搜尋
+            if (searchType == SearchType.OR) {
+                if (exceptTags != null) {
+                    cmdSearch = "select _id from ("
+                            + cmdOrSearch + cmdSubquery
+                            + ") inner join (" + cmdExcept + cmdExceptSub + ")"
+                            + "on _id = t_id";
+                } else {
+                    cmdSearch = cmdOrSearch + cmdSubquery;
+                }
+            } else {
+                if (exceptTags != null) {
+                    cmdSearch = "select _id from ("
+                            + cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + needTags.size()
+                            + ") inner join (" + cmdExcept + cmdExceptSub + ")"
+                            + "on _id = t_id";
+                } else {
+                    cmdSearch = cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + needTags.size();
+                }
+            }
+        } else {
+            if (exceptTags != null) {
+                cmdSearch = cmdExcept + cmdExceptSub;
+            } else {
+                cmdSearch = "select _id from " + dinnerTable;
+            }
+        }
 
+        cursor = db.rawQuery(cmdSearch,null);
         //宣告一個ArrayList<Integer> 用來存放符合搜尋的ID
         ArrayList<Integer> ids = new ArrayList<>();
+
         //如果搜尋結果不是NULL
         if (cursor.moveToFirst()) {
             for (int i = 0; i < cursor.getCount(); i++) {
@@ -95,31 +129,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return ids;
     }
 
-    //AND搜尋
-    public ArrayList<Integer> andSearch(ArrayList<String> tags) {
-        //組成AND搜尋指令
-        cmdSubquery = cmdSubquery + "'" + tags.get(0) + "' ";
-        for (int i = 1; i < tags.size(); i++) {
-            cmdSubquery = cmdSubquery + "or tag = '" + tags.get(i) + "' ";
-        }
-        cmdSubquery = cmdSubquery + ") ";
-        cmdAndSearch = cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + tags.size();
-        Log.i("dinnerEatWhat", cmdAndSearch);
-        //下指令
-        cursor = db.rawQuery(cmdAndSearch, null);
-        //得到符合搜尋結果的ids
+    public String buildCmdSub(String cmdSub, ArrayList<String> tags) {
+        String newcmdSub;
 
-        ArrayList<Integer> ids = new ArrayList<>();
-        //如果搜尋結果不是NULL
-        if (cursor.moveToFirst()) {
-            for (int i = 0; i < cursor.getCount(); i++) {
-                ids.add(cursor.getInt(0));
-                cursor.moveToNext();
-            }
+        newcmdSub = cmdSub;
+        newcmdSub = newcmdSub + "'" + tags.get(0) + "' ";
+        for (int i = 1; i < tags.size(); i++) {
+            newcmdSub = newcmdSub + "or tag = '" + tags.get(i) + "' ";
         }
-        //回傳ID
-        resetCmds();
-        return ids;
+        newcmdSub = newcmdSub + ")";
+
+        return newcmdSub;
     }
 
     //重設搜尋命令
@@ -127,6 +147,8 @@ public class DBHelper extends SQLiteOpenHelper {
         cmdSubquery = "(select t_id from " + tagTable + " where tag = ";
         cmdOrSearch = "select distinct t_id from ";
         cmdAndSearch = "select t_id from ";
+        cmdExcept = "select _id from " + dinnerTable + " where _id not in ";
+        cmdExceptSub = "(select t_id from " + tagTable + " where tag = ";
         cmdGetTag = "select tag from " + tagTable + " where t_id = ";
     }
 
@@ -227,13 +249,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor.getCount();
     }
 
-    public void delTagById(int id){
-        db.delete(tagTable,"t_id = "+id,null);
+    public void delTagById(int id) {
+        db.delete(tagTable, "t_id = " + id, null);
     }
 
-    public void delDinnerAndTag(int id){
-        db.delete(tagTable,"t_id = "+id,null);
-        db.delete(dinnerTable,"_id = "+id,null);
+    public void delDinnerAndTag(int id) {
+        db.delete(tagTable, "t_id = " + id, null);
+        db.delete(dinnerTable, "_id = " + id, null);
     }
 
     public void updateDinnerData(DinnerData dinnerData) {
@@ -248,6 +270,6 @@ public class DBHelper extends SQLiteOpenHelper {
         //刪除舊的tag
         delTagById(dinnerData.getId());
         //寫入新的tag
-        insertTag(dinnerData.getId(),dinnerData.getTags());
+        insertTag(dinnerData.getId(), dinnerData.getTags());
     }
 }

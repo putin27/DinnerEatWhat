@@ -28,8 +28,8 @@ public class MainPresenter {
         view.switchToAddDinner();
     }
 
-    public void onTagChooseDinnerClick(int searchType,String tags) {
-            view.switchToFinalDinner(model.getFinalDinnerByTag(searchType, tags));
+    public void onTagChooseDinnerClick(int searchType, String needTtags, String exceptTags, int price1, int price2) {
+        view.switchToFinalDinner(model.getFinalDinnerByTag(searchType, needTtags,exceptTags,price1,price2));
     }
 
     public void onChooseAgainClick() {

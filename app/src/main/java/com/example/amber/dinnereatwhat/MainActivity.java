@@ -203,10 +203,29 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     }
 
     public void onTagChooseDinnerClick(View view) {
-        //需求TAG是否必填?
-        EditText etTag = (EditText) findViewById(R.id.choose_et_tag);
-        assert etTag != null;
-        presenter.onTagChooseDinnerClick(searchType, etTag.getText().toString());
+        //如果沒有輸入價錢 預設值為-1
+        int price1 = -1, price2 = -1;
+        EditText etNeedTag, etExceptTag, etPrice1, etPrice2;
+
+        etNeedTag = (EditText) findViewById(R.id.choose_et_need_tag);
+        etExceptTag = (EditText) findViewById(R.id.choose_et_except_tag);
+        etPrice1 = (EditText) findViewById(R.id.choose_et_price1);
+        etPrice2 = (EditText) findViewById(R.id.choose_et_price2);
+
+        assert etNeedTag != null;
+        assert etExceptTag != null;
+        assert etPrice1 != null;
+        assert etPrice2 != null;
+        //如果輸入不為空 讀取輸入的數值並儲存
+        if (!etPrice1.getText().toString().trim().isEmpty()) {
+            price1 = Integer.parseInt(etPrice1.getText().toString().trim());
+        }
+        if (!etPrice2.getText().toString().trim().isEmpty()) {
+            price2 = Integer.parseInt(etPrice2.getText().toString().trim());
+        }
+
+        presenter.onTagChooseDinnerClick(searchType, etNeedTag.getText().toString().trim(), etExceptTag.getText().toString().trim(),
+                price1, price2);
     }
 
     public void onChooseAgainClick(View view) {
