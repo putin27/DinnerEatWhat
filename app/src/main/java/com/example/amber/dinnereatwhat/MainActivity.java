@@ -207,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         int price1 = -1, price2 = -1;
         EditText etNeedTag, etExceptTag, etPrice1, etPrice2;
 
+        searchType = SearchType.OR;
+
         etNeedTag = (EditText) findViewById(R.id.choose_et_need_tag);
         etExceptTag = (EditText) findViewById(R.id.choose_et_except_tag);
         etPrice1 = (EditText) findViewById(R.id.choose_et_price1);
@@ -219,9 +221,17 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         //如果輸入不為空 讀取輸入的數值並儲存
         if (!etPrice1.getText().toString().trim().isEmpty()) {
             price1 = Integer.parseInt(etPrice1.getText().toString().trim());
+            if(price1<0){
+                showToast("價格不可為負數!");
+                return;
+            }
         }
         if (!etPrice2.getText().toString().trim().isEmpty()) {
             price2 = Integer.parseInt(etPrice2.getText().toString().trim());
+            if(price2<0){
+                showToast("價格不可為負數!");
+                return;
+            }
         }
 
         presenter.onTagChooseDinnerClick(searchType, etNeedTag.getText().toString().trim(), etExceptTag.getText().toString().trim(),
