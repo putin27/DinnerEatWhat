@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     @Override
     public void switchToChooseDinner() {
         setContentView(R.layout.choose);
+        searchType = SearchType.OR;
         RadioButton rbOr = (RadioButton) findViewById(R.id.rb_or);
         assert rbOr != null;
         rbOr.setChecked(true);
@@ -206,8 +207,6 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         //如果沒有輸入價錢 預設值為-1
         int price1 = -1, price2 = -1;
         EditText etNeedTag, etExceptTag, etPrice1, etPrice2;
-
-        searchType = SearchType.OR;
 
         etNeedTag = (EditText) findViewById(R.id.choose_et_need_tag);
         etExceptTag = (EditText) findViewById(R.id.choose_et_except_tag);

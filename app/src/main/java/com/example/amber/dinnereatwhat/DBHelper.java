@@ -41,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //rawquery指令
     //OR搜尋 AND搜尋 子搜尋
     //寫入新的字串時 保持前面不留 後面有一個空白 防止指令黏在一起造成指令錯誤
-    private String cmdOrSearch, cmdAndSearch, cmdSubquery, cmdExcept, cmdExceptSub, cmdGetTag;
+    private String cmdOrSearch, cmdAndSearch, cmdSubquery, cmdExcept, cmdExceptSub, cmdGetTag, cmdPrice;
 
     private SQLiteDatabase db;
     private Cursor cursor;
@@ -68,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<Integer> search(int searchType, String needTag, String exceptTag, int price1, int price2) {
 
         String cmdSearch;
-        ArrayList<String> needTags = null, exceptTags = null;
+        ArrayList<String> needTags = null, exceptTags;
 
         //如果需求tag不是空的
         //建立搜尋tag
@@ -78,42 +78,55 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         //如果除外tag不是空的
         //建立搜尋tag
-        if (!exceptTag.isEmpty()) {
+        if (exceptTag.isEmpty()) {
+            cmdExceptSub = "()";
+        } else {
             exceptTags = DinnerData.getTags(exceptTag);
             cmdExceptSub = buildCmdSub(cmdExceptSub, exceptTags);
         }
 
         //判斷需求tag是否為空
+
+        //需求tag不為空
         if (needTags != null) {
+
             //判斷是OR還是AND搜尋
+
+            //OR搜尋
             if (searchType == SearchType.OR) {
-                if (exceptTags != null) {
-                    cmdSearch = "select _id from ("
-                            + cmdOrSearch + cmdSubquery
-                            + ") inner join (" + cmdExcept + cmdExceptSub + ")"
-                            + "on _id = t_id";
-                } else {
-                    cmdSearch = cmdOrSearch + cmdSubquery;
-                }
-            } else {
-                if (exceptTags != null) {
-                    cmdSearch = "select _id from ("
-                            + cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + needTags.size()
-                            + ") inner join (" + cmdExcept + cmdExceptSub + ")"
-                            + "on _id = t_id";
-                } else {
-                    cmdSearch = cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + needTags.size();
-                }
+                cmdSearch = "select _id, price from ("
+                        + cmdOrSearch + cmdSubquery
+                        + ") inner join (" + cmdExcept + cmdExceptSub + ")"
+                        + "on _id = t_id";
             }
-        } else {
-            if (exceptTags != null) {
-                cmdSearch = cmdExcept + cmdExceptSub;
-            } else {
-                cmdSearch = "select _id from " + dinnerTable;
+            //AND搜尋
+            else {
+                cmdSearch = "select _id, price from ("
+                        + cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + needTags.size()
+                        + ") inner join (" + cmdExcept + cmdExceptSub + ")"
+                        + "on _id = t_id";
             }
         }
+        //需求tag為空
+        else {
+            cmdSearch = cmdExcept + cmdExceptSub;
+        }
 
-        cursor = db.rawQuery(cmdSearch,null);
+        //判斷是否有輸入價錢tag
+        if (price1 != -1 || price2 != -1) {
+
+            if (price1 == -1) {
+                price1 = 0;
+            }
+            if (price2 == -1) {
+                //給予int最大值2^31-1
+                price2 = (int) (Math.pow(2, 31) - 1);
+            }
+            cmdSearch = "select _id from ( " + cmdSearch + ") where price between " + price1 + " and " + price2;
+        }
+
+
+        cursor = db.rawQuery(cmdSearch, null);
         //宣告一個ArrayList<Integer> 用來存放符合搜尋的ID
         ArrayList<Integer> ids = new ArrayList<>();
 
@@ -147,9 +160,10 @@ public class DBHelper extends SQLiteOpenHelper {
         cmdSubquery = "(select t_id from " + tagTable + " where tag = ";
         cmdOrSearch = "select distinct t_id from ";
         cmdAndSearch = "select t_id from ";
-        cmdExcept = "select _id from " + dinnerTable + " where _id not in ";
+        cmdExcept = "select _id,price from " + dinnerTable + " where _id not in ";
         cmdExceptSub = "(select t_id from " + tagTable + " where tag = ";
         cmdGetTag = "select tag from " + tagTable + " where t_id = ";
+        cmdPrice = "where price between ";
     }
 
     //判斷是否資料庫為空
