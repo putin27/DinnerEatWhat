@@ -194,8 +194,13 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         assert etPrice != null;
         assert etMeal != null;
         assert etTag != null;
-        dinnerData = new DinnerData(etStore.getText().toString(), etMeal.getText().toString(),
-                Integer.parseInt(etPrice.getText().toString(), 10), etTag.getText().toString());
+        if (etPrice.getText().toString().trim().length()>9) {
+            showToast("價錢超出上限!!!");
+            etPrice.requestFocus();
+            return;
+        }
+        dinnerData = new DinnerData(etStore.getText().toString().trim(), etMeal.getText().toString().trim(),
+                Integer.parseInt(etPrice.getText().toString().trim(), 10), etTag.getText().toString().trim());
         presenter.onAddDinnerClick(dinnerData);
         //新增成功後清空
         for (EditText aCheck : check) {
@@ -220,14 +225,14 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         //如果輸入不為空 讀取輸入的數值並儲存
         if (!etPrice1.getText().toString().trim().isEmpty()) {
             price1 = Integer.parseInt(etPrice1.getText().toString().trim());
-            if(price1<0){
+            if (price1 < 0) {
                 showToast("價格不可為負數!");
                 return;
             }
         }
         if (!etPrice2.getText().toString().trim().isEmpty()) {
             price2 = Integer.parseInt(etPrice2.getText().toString().trim());
-            if(price2<0){
+            if (price2 < 0) {
                 showToast("價格不可為負數!");
                 return;
             }
