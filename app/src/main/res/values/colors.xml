@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorMeal">#f10410</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorWhite2">#99ffffff</color>
     <color name="colorHint2">#AAAAAA</color>
     <color name="colorHint">#7F7F7F</color>
 </resources>
