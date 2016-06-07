@@ -26,7 +26,7 @@ public class MainModel {
             dbHelper.insertDinnerAndTag(new DinnerData("7-11", "咖哩飯", 58, "飯,咖哩"));
             dbHelper.insertDinnerAndTag(new DinnerData("阿姨早餐店", "起司蛋餅", 30, "草餐"));
             dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "牛肉麵", 80, "麵,牛肉"));
-            dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "炒飯", 60, "飯"));
+            dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "炒飯",55, "飯"));
             dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "豬肉水餃", 40, "豬肉,水餃"));
             dbHelper.insertDinnerAndTag(new DinnerData("江山海", "雞排麵", 75, "雞肉,麵"));
             dbHelper.insertDinnerAndTag(new DinnerData("江山海", "黯然銷魂飯", 65, "飯"));
