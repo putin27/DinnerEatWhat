@@ -19,13 +19,23 @@ public class MainModel {
         dbHelper = new DBHelper(activity);
         //如果沒有資料，就載入7筆預設資料
         if (dbHelper.isEmpty()) {
-            dbHelper.insertDinnerAndTag(new DinnerData("麥當勞", "雞塊餐", 99, "a"));
-            dbHelper.insertDinnerAndTag(new DinnerData("KLG", "C餐", 109, "b"));
-            dbHelper.insertDinnerAndTag(new DinnerData("7-11", "義大利麵", 75, "c"));
-            dbHelper.insertDinnerAndTag(new DinnerData("阿姨早餐店", "起司蛋餅", 30, "d"));
-            dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "牛肉麵", 80, "e"));
-            dbHelper.insertDinnerAndTag(new DinnerData("江山海", "雞排麵", 75, "f"));
-            dbHelper.insertDinnerAndTag(new DinnerData("天狗", "雞排鐵板麵", 75, "g"));
+            dbHelper.insertDinnerAndTag(new DinnerData("麥當勞", "雞塊餐", 99, "雞肉,炸物"));
+            dbHelper.insertDinnerAndTag(new DinnerData("麥當勞", "大麥克餐", 109, "牛肉,炸物"));
+            dbHelper.insertDinnerAndTag(new DinnerData("麥當勞", "豬肉滿福堡餐", 59, "豬肉,早餐"));
+            dbHelper.insertDinnerAndTag(new DinnerData("7-11", "義大利麵", 75, "麵"));
+            dbHelper.insertDinnerAndTag(new DinnerData("7-11", "咖哩飯", 58, "飯,咖哩"));
+            dbHelper.insertDinnerAndTag(new DinnerData("阿姨早餐店", "起司蛋餅", 30, "草餐"));
+            dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "牛肉麵", 80, "麵,牛肉"));
+            dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "炒飯", 60, "飯"));
+            dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "豬肉水餃", 40, "豬肉,水餃"));
+            dbHelper.insertDinnerAndTag(new DinnerData("江山海", "雞排麵", 75, "雞肉,麵"));
+            dbHelper.insertDinnerAndTag(new DinnerData("江山海", "黯然銷魂飯", 65, "飯"));
+            dbHelper.insertDinnerAndTag(new DinnerData("上匠", "炸雞腿飯", 70, "飯,炸物,雞肉"));
+            dbHelper.insertDinnerAndTag(new DinnerData("上匠", "魚排飯", 65, "飯,魚肉"));
+            dbHelper.insertDinnerAndTag(new DinnerData("擄胃專家", "排骨飯", 70, "飯"));
+            dbHelper.insertDinnerAndTag(new DinnerData("天狗", "香脆雞腿排", 140, "飯,麵,雞肉"));
+            dbHelper.insertDinnerAndTag(new DinnerData("天狗", "天狗牛排", 140, "飯,麵,牛肉"));
+            dbHelper.insertDinnerAndTag(new DinnerData("王品", "法式鵝肝佐松露菲力", 1350, "牛肉,西餐"));
         }
     }
 
