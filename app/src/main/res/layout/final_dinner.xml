@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1">
-
+    android:weightSum="1"
+    android:background="@mipmap/bg03">
     <TextView
         android:id="@+id/final_dinner_tv_title"
         android:layout_width="wrap_content"
@@ -20,6 +20,7 @@
         android:layout_gravity="center_horizontal"
         android:text="隨機店名"
         android:textAlignment="center"
+        android:textColor="@color/colorMeal"
         android:textSize="30sp" />
 
     <TextView
@@ -38,6 +39,7 @@
         android:layout_gravity="center_horizontal"
         android:text="隨機餐點"
         android:textAlignment="center"
+        android:textColor="@color/colorMeal"
         android:textSize="30sp" />
 
     <TextView
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="價錢"
+        android:textColor="@color/colorPrimary"
         android:textSize="30sp" />
 
     <Button
