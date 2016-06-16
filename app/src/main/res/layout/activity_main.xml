@@ -22,7 +22,7 @@
         android:text="@string/chose_dinner" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/cb_recommend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

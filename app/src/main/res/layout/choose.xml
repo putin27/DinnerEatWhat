@@ -107,7 +107,7 @@
         android:text="隨機選餐" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/choose_cb_recommend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

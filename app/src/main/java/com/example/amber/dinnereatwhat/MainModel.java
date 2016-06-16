@@ -26,7 +26,7 @@ public class MainModel {
             dbHelper.insertDinnerAndTag(new DinnerData("7-11", "咖哩飯", 58, "飯,咖哩"));
             dbHelper.insertDinnerAndTag(new DinnerData("阿姨早餐店", "起司蛋餅", 30, "草餐"));
             dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "牛肉麵", 80, "麵,牛肉"));
-            dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "炒飯",55, "飯"));
+            dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "炒飯", 55, "飯"));
             dbHelper.insertDinnerAndTag(new DinnerData("珍膳坊", "豬肉水餃", 40, "豬肉,水餃"));
             dbHelper.insertDinnerAndTag(new DinnerData("江山海", "雞排麵", 75, "雞肉,麵"));
             dbHelper.insertDinnerAndTag(new DinnerData("江山海", "黯然銷魂飯", 65, "飯"));
@@ -36,6 +36,12 @@ public class MainModel {
             dbHelper.insertDinnerAndTag(new DinnerData("天狗", "香脆雞腿排", 140, "飯,麵,雞肉"));
             dbHelper.insertDinnerAndTag(new DinnerData("天狗", "天狗牛排", 140, "飯,麵,牛肉"));
             dbHelper.insertDinnerAndTag(new DinnerData("王品", "法式鵝肝佐松露菲力", 1350, "牛肉,西餐"));
+
+
+            dbHelper.insertDinnerAndTag(new DinnerData("赤鬼", "菲力牛排", 350, "牛肉", 1));
+            dbHelper.insertDinnerAndTag(new DinnerData("赤鬼", "炙燒豬排", 299, "豬肉", 1));
+            dbHelper.insertDinnerAndTag(new DinnerData("赤鬼", "無骨牛小排", 450, "牛肉", 1));
+            dbHelper.insertDinnerAndTag(new DinnerData("赤鬼", "黃金雞排", 250, "雞肉", 1));
         }
     }
 
@@ -57,21 +63,14 @@ public class MainModel {
     public ArrayList<DinnerData> getAllDinnerData() {
         return dbHelper.getAllDinnerData();
     }
-
-    //快速隨機取得晚餐
-    public DinnerData getFinalDinnerFast() {
-        this.ids = dbHelper.fastSearch();
-        //如果ids裡沒東西 回傳無搜尋結果的預設值
-        if (ids.size() == 0) {
-            return new DinnerData("null", "", 0, "");
-        }
-        Random random = new Random();
-        return dbHelper.getDinnerDataById(ids.get(random.nextInt(ids.size())));
+    //取得所有非推薦餐點
+    public ArrayList<DinnerData> getDinnnerDataWithoutRecommend(){
+        return dbHelper.getDinnnerDataWithoutRecommend();
     }
 
-    public DinnerData getFinalDinnerByTag(int searchType, String needTtags, String exceptTags, int price1, int price2) {
+    public DinnerData getFinalDinnerByTag(int searchType, String needTtags, String exceptTags, int price1, int price2, int recommend) {
 
-        this.ids = dbHelper.search(searchType, needTtags, exceptTags, price1, price2);
+        this.ids = dbHelper.search(searchType, needTtags, exceptTags, price1, price2, recommend);
 
         //如果ids裡沒東西 回傳無搜尋結果的預設值
         if (ids.size() == 0) {

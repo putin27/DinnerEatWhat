@@ -23,4 +23,6 @@ public interface MainView {
     void showToast(String msg);
 
     void switchToEditDinner(DinnerData dinnerData);
+
+    void switchToViewDinner(ArrayList<DinnerData> dinnerData);
 }

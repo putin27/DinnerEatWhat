@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private String createDinnerTable = "CREATE TABLE IF NOT EXISTS " + dinnerTable
             + " ("
             + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + "shop CHAR, meal CHAR, price INT,tag CHAR"
+            + "shop CHAR, meal CHAR, price INT,tag CHAR,recommend INTEGER"
             + ")";
     //創建tag table的指令
     //t_id int foreign key,tag
@@ -41,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
     //rawquery指令
     //OR搜尋 AND搜尋 子搜尋
     //寫入新的字串時 保持前面不留 後面有一個空白 防止指令黏在一起造成指令錯誤
-    private String cmdOrSearch, cmdAndSearch, cmdSubquery, cmdExcept, cmdExceptSub, cmdGetTag, cmdPrice;
+    private String cmdOrSearch, cmdAndSearch, cmdSubquery, cmdExcept, cmdExceptSub, cmdGetTag, cmdPrice, cmdRecommend;
 
     private SQLiteDatabase db;
     private Cursor cursor;
@@ -65,7 +65,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public ArrayList<Integer> search(int searchType, String needTag, String exceptTag, int price1, int price2) {
+    public ArrayList<Integer> search(int searchType, String needTag, String exceptTag, int price1, int price2, int recommend) {
 
         String cmdSearch;
         ArrayList<String> needTags = null, exceptTags;
@@ -85,6 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
             cmdExceptSub = buildCmdSub(cmdExceptSub, exceptTags);
         }
 
+
         //判斷需求tag是否為空
 
         //需求tag不為空
@@ -97,14 +98,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 cmdSearch = "select _id, price from ("
                         + cmdOrSearch + cmdSubquery
                         + ") inner join (" + cmdExcept + cmdExceptSub + ")"
-                        + "on _id = t_id";
+                        + "on _id = t_id ";
             }
             //AND搜尋
             else {
                 cmdSearch = "select _id, price from ("
                         + cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + needTags.size()
                         + ") inner join (" + cmdExcept + cmdExceptSub + ")"
-                        + "on _id = t_id";
+                        + "on _id = t_id ";
             }
         }
         //需求tag為空
@@ -122,8 +123,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 //給予int最大值2^31-1
                 price2 = (int) (Math.pow(2, 31) - 1);
             }
-            cmdSearch = "select _id from ( " + cmdSearch + ") where price between " + price1 + " and " + price2;
+            cmdSearch = "select _id, recommend from ( " + cmdSearch + ") where price between " + price1 + " and " + price2;
         }
+        //如果沒有打開"推薦餐點選項"
+        //去掉推薦餐點
+        if (recommend == 0) {
+            cmdSearch = "select _id from ( " + cmdSearch + ") where " + cmdRecommend;
+        }
+        //觀看搜尋指令
+        //Log.i("dinnerEatWhat", "cmd = " + cmdSearch);
 
 
         cursor = db.rawQuery(cmdSearch, null);
@@ -160,10 +168,11 @@ public class DBHelper extends SQLiteOpenHelper {
         cmdSubquery = "(select t_id from " + tagTable + " where tag = ";
         cmdOrSearch = "select distinct t_id from ";
         cmdAndSearch = "select t_id from ";
-        cmdExcept = "select _id,price from " + dinnerTable + " where _id not in ";
+        cmdExcept = "select _id,price,recommend from " + dinnerTable + " where _id not in ";
         cmdExceptSub = "(select t_id from " + tagTable + " where tag = ";
         cmdGetTag = "select tag from " + tagTable + " where t_id = ";
         cmdPrice = "where price between ";
+        cmdRecommend = "recommend = 0";
     }
 
     //判斷是否資料庫為空
@@ -199,10 +208,12 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("meal", dinnerData.getMeal());
         contentValues.put("price", dinnerData.getPrice());
         contentValues.put("tag", dinnerData.getTag());
+        contentValues.put("recommend", dinnerData.getRecommend());
         db.insert(dinnerTable, null, contentValues);
         //拿取剛剛加進去的那筆的ID
         insertTag(getLastDinnerId(), dinnerData.getTags());
     }
+
 
     public String getTag(int id) {
         Cursor tagCursor;
@@ -222,14 +233,27 @@ public class DBHelper extends SQLiteOpenHelper {
         return s;
     }
 
+    public ArrayList<DinnerData> getDinnnerDataWithoutRecommend() {
+        ArrayList<DinnerData> dinnerDatas = new ArrayList<>();
+        ArrayList<Integer> dinnerIds;
+
+        dinnerIds = search(SearchType.OR, "", "", -1, -1, 0);
+        for (int id : dinnerIds) {
+            dinnerDatas.add(getDinnerDataById(id));
+        }
+
+        return dinnerDatas;
+    }
+
     public ArrayList<DinnerData> getAllDinnerData() {
         ArrayList<DinnerData> dinnerDatas = new ArrayList<>();
-        cursor = db.query(dinnerTable, null, null, null, null, null, null);
-        cursor.moveToFirst();
-        for (int i = 0; i < cursor.getCount(); i++) {
-            dinnerDatas.add(new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4)));
-            cursor.moveToNext();
+        ArrayList<Integer> dinnerIds;
+
+        dinnerIds = search(SearchType.OR, "", "", -1, -1, 1);
+        for (int id : dinnerIds) {
+            dinnerDatas.add(getDinnerDataById(id));
         }
+
         return dinnerDatas;
     }
 
@@ -248,13 +272,15 @@ public class DBHelper extends SQLiteOpenHelper {
         String cmdId = "select * from " + dinnerTable + " where _id = " + id;
         cursor = db.rawQuery(cmdId, null);
         cursor.moveToFirst();
-        return new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+        return new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4),
+                cursor.getInt(5));
     }
 
     public DinnerData getDinnerDataByPosition(int position) {
         cursor = db.query(dinnerTable, null, null, null, null, null, null);
         cursor.moveToPosition(position);
-        return new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4));
+        return new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4),
+                cursor.getInt(5));
     }
 
     public int getSize() {

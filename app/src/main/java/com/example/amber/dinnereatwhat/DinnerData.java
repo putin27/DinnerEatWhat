@@ -11,9 +11,19 @@ public class DinnerData {
     private String meal;
     private int price;
     private String tag;
+    private int recommend = 0;
 
     public DinnerData() {
 
+    }
+
+    public DinnerData(int id, String shop, String meal, int price, String tag, int recommend) {
+        this.id = id;
+        this.shop = shop;
+        this.meal = meal;
+        this.price = price;
+        this.tag = tag;
+        this.recommend = recommend;
     }
 
     public DinnerData(int id, String shop, String meal, int price, String tag) {
@@ -29,6 +39,14 @@ public class DinnerData {
         this.meal = meal;
         this.price = price;
         this.tag = tag;
+    }
+
+    public DinnerData(String shop, String meal, int price, String tag, int recommend) {
+        this.shop = shop;
+        this.meal = meal;
+        this.price = price;
+        this.tag = tag;
+        this.recommend = recommend;
     }
 
     public String toString() {
@@ -81,5 +99,9 @@ public class DinnerData {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getRecommend() {
+        return recommend;
     }
 }

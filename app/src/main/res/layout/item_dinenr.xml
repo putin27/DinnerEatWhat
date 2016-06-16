@@ -2,37 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/item_dinner_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/item_dinner_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
-            android:textSize="20dp"
-            android:text="dinner name" />
+            android:text="dinner name"
+            android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/item_edit_button"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/item_dinner_tag"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/edit_item_dinner" />
+            android:text="tags:"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/item_dinner_tv"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/item_dinner_tag"
-        android:layout_width="match_parent"
+
+    <Button
+        android:id="@+id/item_edit_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="tags:" />
-    <TextView
-        android:id="@+id/item_dinner_tv"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"/>
+        android:text="@string/edit_item_dinner" />
 
 </LinearLayout>

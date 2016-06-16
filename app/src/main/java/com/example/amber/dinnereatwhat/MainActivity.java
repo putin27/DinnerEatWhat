@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -59,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     //初始化RecyeclerView
     @Override
     public void initDinnerRecyeclerView(ArrayList<DinnerData> dinnerDatas) {
-        //切換至edit_dinner
-        setContentView(R.layout.view_dinner);
         //宣告&new出自訂的Adapter
         DinnerAdapter dinnerAdapter = new DinnerAdapter(dinnerDatas, this);
         //取得RecyeclerView
@@ -94,6 +93,13 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         etPrice.setText("" + dinnerData.getPrice());
         assert etTag != null;
         etTag.setText(dinnerData.getTag());
+    }
+
+    @Override
+    public void switchToViewDinner(ArrayList<DinnerData> dinnerData) {
+        //切換至view_dinner
+        setContentView(R.layout.view_dinner);
+        initDinnerRecyeclerView(dinnerData);
     }
 
     @Override
@@ -160,7 +166,13 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     }
 
     public void onFastChooseDinnerClick(View view) {
-        presenter.onFastChooseDinnerClick();
+        int recommend = 0;
+        CheckBox cb_recommend = (CheckBox) findViewById(R.id.cb_recommend);
+        assert cb_recommend != null;
+        if (cb_recommend.isChecked()) {
+            recommend = 1;
+        }
+        presenter.onFastChooseDinnerClick(recommend);
     }
 
     public void onChooseDinnerClick(View view) {
@@ -194,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         assert etPrice != null;
         assert etMeal != null;
         assert etTag != null;
-        if (etPrice.getText().toString().trim().length()>9) {
+        if (etPrice.getText().toString().trim().length() > 9) {
             showToast("價錢超出上限!!!");
             etPrice.requestFocus();
             return;
@@ -210,13 +222,16 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
 
     public void onTagChooseDinnerClick(View view) {
         //如果沒有輸入價錢 預設值為-1
-        int price1 = -1, price2 = -1;
+        int price1 = -1, price2 = -1, recommend = 0;
         EditText etNeedTag, etExceptTag, etPrice1, etPrice2;
+        CheckBox cb_recommend;
 
         etNeedTag = (EditText) findViewById(R.id.choose_et_need_tag);
         etExceptTag = (EditText) findViewById(R.id.choose_et_except_tag);
         etPrice1 = (EditText) findViewById(R.id.choose_et_price1);
         etPrice2 = (EditText) findViewById(R.id.choose_et_price2);
+
+        cb_recommend = (CheckBox) findViewById(R.id.choose_cb_recommend);
 
         assert etNeedTag != null;
         assert etExceptTag != null;
@@ -238,8 +253,13 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
             }
         }
 
+        assert cb_recommend != null;
+        if (cb_recommend.isChecked()) {
+            recommend = 1;
+        }
+
         presenter.onTagChooseDinnerClick(searchType, etNeedTag.getText().toString().trim(), etExceptTag.getText().toString().trim(),
-                price1, price2);
+                price1, price2, recommend);
     }
 
     public void onChooseAgainClick(View view) {
@@ -255,6 +275,13 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         presenter.onGoViewDinnerClick();
     }
 
+    public void onShowRecommendClick(View view) {
+        CheckBox cb_recommend = (CheckBox) findViewById(R.id.view_dinner_cb_recommend);
+        assert cb_recommend != null;
+        presenter.onShowRecommendClick(cb_recommend.isChecked());
+    }
+
+
     public void onRadioButtonClick(View view) {
         switch (view.getId()) {
             case R.id.rb_and:
@@ -264,6 +291,10 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
                 searchType = SearchType.OR;
                 break;
         }
+    }
+
+    public void onShowRecommendClick() {
+
     }
 
     public void onEditButtonClick(View view) {
@@ -305,4 +336,5 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 }

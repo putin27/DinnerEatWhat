@@ -16,8 +16,8 @@ public class MainPresenter {
         view.setContentView();
     }
 
-    public void onFastChooseDinnerClick() {
-        view.switchToFinalDinner(model.getFinalDinnerFast());
+    public void onFastChooseDinnerClick(int recommend) {
+        view.switchToFinalDinner(model.getFinalDinnerByTag(SearchType.OR, "", "", -1, -1, recommend));
     }
 
     public void onChooseDinnerClick() {
@@ -28,8 +28,8 @@ public class MainPresenter {
         view.switchToAddDinner();
     }
 
-    public void onTagChooseDinnerClick(int searchType, String needTtags, String exceptTags, int price1, int price2) {
-        view.switchToFinalDinner(model.getFinalDinnerByTag(searchType, needTtags,exceptTags,price1,price2));
+    public void onTagChooseDinnerClick(int searchType, String needTtags, String exceptTags, int price1, int price2, int recommend) {
+        view.switchToFinalDinner(model.getFinalDinnerByTag(searchType, needTtags, exceptTags, price1, price2, recommend));
     }
 
     public void onChooseAgainClick() {
@@ -45,7 +45,16 @@ public class MainPresenter {
     }
 
     public void onGoViewDinnerClick() {
-        view.initDinnerRecyeclerView(model.getAllDinnerData());
+        view.switchToViewDinner(model.getDinnnerDataWithoutRecommend());
+    }
+
+    public void onShowRecommendClick(boolean isChecked) {
+        if(isChecked) {
+            view.initDinnerRecyeclerView(model.getAllDinnerData());
+        }
+        else {
+            view.initDinnerRecyeclerView(model.getDinnnerDataWithoutRecommend());
+        }
     }
 
     //按下加入晚餐頁面的新增按鈕
@@ -67,4 +76,5 @@ public class MainPresenter {
         view.showToast("刪除成功!!!");
         view.switchToMainView();
     }
+
 }
