@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -132,7 +131,7 @@ public class DBHelper extends SQLiteOpenHelper {
             cmdSearch = "select _id from ( " + cmdSearch + ") where " + cmdRecommend;
         }
         //觀看搜尋指令
-        Log.i("dinnerEatWhat", "cmd = " + cmdSearch);
+        //Log.i("dinnerEatWhat", "cmd = " + cmdSearch);
 
 
         cursor = db.rawQuery(cmdSearch, null);
