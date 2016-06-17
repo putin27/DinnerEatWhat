@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
 
     private MainPresenter presenter;
     private int searchType = SearchType.OR;
+    private int recommend = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     public void switchToViewDinner(ArrayList<DinnerData> dinnerData) {
         //切換至view_dinner
         setContentView(R.layout.view_dinner);
+        recommend = 0;
         initDinnerRecyeclerView(dinnerData);
     }
 
@@ -128,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     //按下編輯頁面的編輯按鈕
     @Override
     public void onGoEditButtonClick(int position) {
-        presenter.onGoEditButtonClick(position);
+        presenter.onGoEditButtonClick(position,recommend);
     }
 
     private void setFinalDinner(DinnerData dinnerData) {
@@ -166,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     }
 
     public void onFastChooseDinnerClick(View view) {
-        int recommend = 0;
         CheckBox cb_recommend = (CheckBox) findViewById(R.id.cb_recommend);
         assert cb_recommend != null;
         if (cb_recommend.isChecked()) {
@@ -257,7 +258,6 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         if (cb_recommend.isChecked()) {
             recommend = 1;
         }
-
         presenter.onTagChooseDinnerClick(searchType, etNeedTag.getText().toString().trim(), etExceptTag.getText().toString().trim(),
                 price1, price2, recommend);
     }
@@ -278,6 +278,11 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     public void onShowRecommendClick(View view) {
         CheckBox cb_recommend = (CheckBox) findViewById(R.id.view_dinner_cb_recommend);
         assert cb_recommend != null;
+        if (cb_recommend.isChecked()) {
+            recommend = 1;
+        } else {
+            recommend = 0;
+        }
         presenter.onShowRecommendClick(cb_recommend.isChecked());
     }
 

@@ -40,8 +40,8 @@ public class MainPresenter {
         view.switchToMainView();
     }
 
-    public void onGoEditButtonClick(int position) {
-        view.switchToEditDinner(model.getDinnerDataByPosition(position));
+    public void onGoEditButtonClick(int position,int recommend) {
+        view.switchToEditDinner(model.getDinnerDataByPosition(position,recommend));
     }
 
     public void onGoViewDinnerClick() {

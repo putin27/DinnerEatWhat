@@ -54,17 +54,20 @@ public class MainModel {
         }
     }
 
-    public DinnerData getDinnerDataByPosition(int position) {
-        editingId = dbHelper.getDinnerDataByPosition(position).getId();
-        return dbHelper.getDinnerDataByPosition(position);
+    public DinnerData getDinnerDataByPosition(int position, int recommend) {
+        DinnerData dinnerData;
+        dinnerData = dbHelper.getDinnerDataByPosition(position, recommend);
+        editingId = dinnerData.getId();
+        return dinnerData;
     }
 
     //取得所有的晚餐資料
     public ArrayList<DinnerData> getAllDinnerData() {
         return dbHelper.getAllDinnerData();
     }
+
     //取得所有非推薦餐點
-    public ArrayList<DinnerData> getDinnnerDataWithoutRecommend(){
+    public ArrayList<DinnerData> getDinnnerDataWithoutRecommend() {
         return dbHelper.getDinnnerDataWithoutRecommend();
     }
 

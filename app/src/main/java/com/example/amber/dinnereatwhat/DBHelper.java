@@ -79,18 +79,18 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         //如果除外tag不是空的
         //建立搜尋tag
-        if (exceptTag.isEmpty()) {
-            cmdExceptSub = "()";
-        } else {
+        if (!exceptTag.isEmpty()) {
             exceptTags = DinnerData.getTags(exceptTag);
             cmdExceptSub = buildCmdSub(cmdExceptSub, exceptTags);
+        } else {
+            cmdExceptSub = "()";
         }
 
 
         //判斷需求tag是否為空
 
         //需求tag不為空
-        if (needTags != null) {
+        if (needTags != null && needTags.size() > 0) {
 
             //判斷是OR還是AND搜尋
 
@@ -152,6 +152,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public String buildCmdSub(String cmdSub, ArrayList<String> tags) {
+        if (tags.size() == 0) {
+            return "()";
+        }
         String newcmdSub;
 
         newcmdSub = cmdSub;
@@ -277,8 +280,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 cursor.getInt(5));
     }
 
-    public DinnerData getDinnerDataByPosition(int position) {
-        cursor = db.query(dinnerTable, null, null, null, null, null, null);
+    public DinnerData getDinnerDataByPosition(int position,int recommend) {
+        if(recommend==1){
+            cursor = db.query(dinnerTable, null, null, null, null, null, null);
+        }
+        else {
+            cursor = db.rawQuery("select * from "+dinnerTable+" where recommend = 0 ",null);
+        }
         cursor.moveToPosition(position);
         return new DinnerData(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4),
                 cursor.getInt(5));
