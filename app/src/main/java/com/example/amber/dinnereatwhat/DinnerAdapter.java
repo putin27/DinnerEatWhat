@@ -47,7 +47,7 @@ public class DinnerAdapter extends RecyclerView.Adapter<DinnerAdapter.ViewHolder
         }
 
         if (dinnerDatas.get(position).getRecommend() == 1) {
-            holder.imageView.setImageResource(R.mipmap.good);
+            holder.imageView.setImageResource(R.mipmap.eat);
             holder.imageView.setVisibility(View.VISIBLE);
         }
         else {
