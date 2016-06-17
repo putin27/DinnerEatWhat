@@ -3,57 +3,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg01"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:weightSum="1"
-    android:background="@mipmap/bg01"
     tools:context="com.example.amber.dinnereatwhat.MainActivity">
 
     <Button
         android:id="@+id/b_choseDinner"
-        android:layout_width="191dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150sp"
+        android:layout_height="35sp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.08"
+        android:background="@mipmap/blank01"
         android:onClick="onFastChooseDinnerClick"
-        android:text="@string/chose_dinner" />
+        android:text="@string/chose_dinner"
+        android:textSize="20sp" />
 
     <CheckBox
         android:id="@+id/cb_recommend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100sp"
+        android:layout_height="35sp"
         android:layout_gravity="center_horizontal"
+        android:background="@mipmap/blank01"
         android:checked="false"
-        android:background="@color/colorWhite"
-        android:text="推薦餐點  " />
+        android:text="推薦餐點  "
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="191dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150sp"
+        android:layout_height="35sp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.08"
+        android:background="@mipmap/blank01"
         android:onClick="onChooseDinnerClick"
         android:text="@string/chose_dinner2" />
 
     <Button
         android:id="@+id/b_addDinner"
-        android:layout_width="191dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150sp"
+        android:layout_height="35sp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.08"
+        android:background="@mipmap/blank01"
         android:onClick="onGoAddDinnerClick"
         android:text="@string/add_dinner" />
 
     <Button
         android:id="@+id/b_editDinner"
-        android:layout_width="191dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150sp"
+        android:layout_height="35sp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.08"
+        android:background="@mipmap/blank01"
         android:onClick="onGoViewDinnerClick"
         android:text="@string/edit_dinner" />
 </LinearLayout>

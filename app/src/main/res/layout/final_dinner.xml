@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg01"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:background="@mipmap/bg01">
+    android:weightSum="1">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@mipmap/blank01"
         android:orientation="vertical"
-        android:weightSum="1"
-        android:background="@mipmap/blank01">
+        android:weightSum="1">
 
         <TextView
             android:id="@+id/final_dinner_tv_title"
@@ -58,7 +59,6 @@
             android:textColor="@color/colorPrimary"
             android:textSize="30sp" />
     </LinearLayout>
-
 
 
     <Button

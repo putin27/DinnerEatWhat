@@ -38,8 +38,10 @@
 
     <Button
         android:id="@+id/item_edit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_item_dinner" />
+        android:layout_width="60sp"
+        android:layout_height="30sp"
+        android:background="@mipmap/blank01"
+        android:text="@string/edit_item_dinner"
+        android:textSize="15sp" />
 
 </LinearLayout>
