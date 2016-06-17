@@ -187,8 +187,18 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
         EditText etMeal = (EditText) findViewById(R.id.et_meal);
         EditText etPrice = (EditText) findViewById(R.id.et_price);
         EditText etTag = (EditText) findViewById(R.id.et_tag);
+
+        assert etStore != null;
+        assert etPrice != null;
+        assert etMeal != null;
+        assert etTag != null;
+
         //檢查用陣列
         EditText[] check = {etStore, etMeal, etPrice};
+
+        //如果資料還沒準備好就不寫入資料庫
+        //如果資料準備好才寫入資料庫
+
         //檢查店名、餐點名稱、價格是否有填入
         for (EditText aCheck : check) {
             //如果為空
@@ -201,12 +211,6 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
                 return;
             }
         }
-        //如果資料還沒準備好就不寫入資料庫
-        //如果資料準備好才寫入資料庫
-        assert etStore != null;
-        assert etPrice != null;
-        assert etMeal != null;
-        assert etTag != null;
         if (etPrice.getText().toString().trim().length() > 9) {
             showToast("價錢超出上限!!!");
             etPrice.requestFocus();
@@ -303,17 +307,37 @@ public class MainActivity extends AppCompatActivity implements MainView, DinnerA
     }
 
     public void onEditButtonClick(View view) {
-        EditText etShop, etMeal, etPrice, etTag;
-        etShop = (EditText) findViewById(R.id.edit_dinner_et_shop);
+        EditText etStore, etMeal, etPrice, etTag;
+        etStore = (EditText) findViewById(R.id.edit_dinner_et_shop);
         etMeal = (EditText) findViewById(R.id.edit_dinner_et_meal);
         etPrice = (EditText) findViewById(R.id.edit_dinner_et_price);
         etTag = (EditText) findViewById(R.id.edit_dinner_et_tag);
 
-        assert etShop != null;
+        assert etStore != null;
         assert etMeal != null;
         assert etPrice != null;
         assert etTag != null;
-        DinnerData dinnerData = new DinnerData(etShop.getText().toString(), etMeal.getText().toString(),
+
+        //檢查用陣列
+        EditText[] check = {etStore, etMeal, etPrice};
+        //檢查店名、餐點名稱、價格是否有填入
+        for (EditText aCheck : check) {
+            //如果為空
+            if (aCheck.getText().toString().trim().isEmpty()) {
+                //聚焦在該EditText上
+                aCheck.requestFocus();
+                //顯示錯誤訊息給使用者
+                showToast("該項為必填項目!!!");
+                //設定資料還沒準備好
+                return;
+            }
+        }
+        if (etPrice.getText().toString().trim().length() > 9) {
+            showToast("價錢超出上限!!!");
+            etPrice.requestFocus();
+            return;
+        }
+        DinnerData dinnerData = new DinnerData(etStore.getText().toString(), etMeal.getText().toString(),
                 Integer.parseInt(etPrice.getText().toString(), 10), etTag.getText().toString());
         presenter.onEditButtonClick(dinnerData);
     }

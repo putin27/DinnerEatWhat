@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg02"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:background="@mipmap/bg02">
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/add_tv_store"
@@ -19,6 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="請輸入店家名稱..."
+        android:inputType="textAutoComplete"
         android:textColorHint="@color/colorHint" />
 
     <TextView
@@ -36,6 +37,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.05"
         android:hint="請輸入餐點名稱..."
+        android:inputType="textAutoComplete"
         android:textColorHint="@color/colorHint" />
 
     <TextView
@@ -70,6 +72,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.05"
         android:hint="請輸入標籤(ex:飯,熱食,晚餐)..."
+        android:inputType="textAutoComplete"
         android:textColorHint="@color/colorHint" />
 
     <Button
