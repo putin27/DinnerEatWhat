@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -95,14 +96,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
             //OR搜尋
             if (searchType == SearchType.OR) {
-                cmdSearch = "select _id, price from ("
+                cmdSearch = "select _id, price, recommend from ("
                         + cmdOrSearch + cmdSubquery
                         + ") inner join (" + cmdExcept + cmdExceptSub + ")"
                         + "on _id = t_id ";
             }
             //AND搜尋
             else {
-                cmdSearch = "select _id, price from ("
+                cmdSearch = "select _id, price, recommend from ("
                         + cmdAndSearch + cmdSubquery + "group by t_id having count(t_id)>=" + needTags.size()
                         + ") inner join (" + cmdExcept + cmdExceptSub + ")"
                         + "on _id = t_id ";
@@ -131,7 +132,7 @@ public class DBHelper extends SQLiteOpenHelper {
             cmdSearch = "select _id from ( " + cmdSearch + ") where " + cmdRecommend;
         }
         //觀看搜尋指令
-        //Log.i("dinnerEatWhat", "cmd = " + cmdSearch);
+        Log.i("dinnerEatWhat", "cmd = " + cmdSearch);
 
 
         cursor = db.rawQuery(cmdSearch, null);
