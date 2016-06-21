@@ -41,9 +41,9 @@ public class MainModel {
 //            dbHelper.insertDinnerAndTag(new DinnerData("王品", "法式鵝肝佐松露菲力", 1350, "牛肉,西餐"));
 
 
-            dbHelper.insertDinnerAndTag(new DinnerData("丹丹", "5號餐", 79, "雞肉,湯", 1));
-            dbHelper.insertDinnerAndTag(new DinnerData("丹丹", "10號餐", 79, "雞肉,炸物", 1));
-            dbHelper.insertDinnerAndTag(new DinnerData("丹丹", "9號餐", 79, "雞肉,羹", 1));
+            dbHelper.insertDinnerAndTag(new DinnerData("丹丹", "5號餐", 79, "雞肉,湯,南部,高雄,台南", 1));
+            dbHelper.insertDinnerAndTag(new DinnerData("丹丹", "10號餐", 79, "雞肉,炸物,高雄,台南", 1));
+            dbHelper.insertDinnerAndTag(new DinnerData("丹丹", "9號餐", 79, "雞肉,羹,高雄,台南", 1));
 
         }
     }
