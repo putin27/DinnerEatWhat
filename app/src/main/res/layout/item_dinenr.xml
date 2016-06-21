@@ -30,7 +30,7 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/item_dinner_tv"
+            android:id="@+id/item_dinner_divider"
             android:layout_width="match_parent"
             android:layout_height="20dp" />
     </LinearLayout>
