@@ -1,4 +1,4 @@
-package com.example.amber.dinnereatwhat;
+package team26.fcu.dinnereatwhat;
 
 public class MainPresenter {
     private final MainView view;

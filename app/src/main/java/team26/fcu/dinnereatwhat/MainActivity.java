@@ -1,4 +1,4 @@
-package com.example.amber.dinnereatwhat;
+package team26.fcu.dinnereatwhat;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.amber.dinnereatwhat.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.amber.dinnereatwhat;
+package team26.fcu.dinnereatwhat;
 
 import java.util.ArrayList;
 import java.util.Random;

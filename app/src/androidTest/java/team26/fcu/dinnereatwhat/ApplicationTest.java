@@ -1,4 +1,4 @@
-package com.example.amber.dinnereatwhat;
+package team26.fcu.dinnereatwhat;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

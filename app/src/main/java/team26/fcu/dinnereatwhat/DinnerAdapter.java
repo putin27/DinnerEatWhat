@@ -1,4 +1,4 @@
-package com.example.amber.dinnereatwhat;
+package team26.fcu.dinnereatwhat;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.amber.dinnereatwhat.R;
 
 import java.util.ArrayList;
 
