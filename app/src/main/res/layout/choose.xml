@@ -2,9 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/bg02"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:background="@mipmap/bg02">
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="需求標籤"
+        android:textColor="@color/colorBlack"
         android:textSize="30sp" />
 
     <EditText
@@ -51,6 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="除外標籤"
+        android:textColor="@color/colorBlack"
         android:textSize="30sp" />
 
     <EditText
@@ -64,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="價錢(不填為不設限)"
+        android:textColor="@color/colorBlack"
         android:textSize="30sp" />
 
     <LinearLayout
